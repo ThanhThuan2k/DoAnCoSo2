@@ -1,0 +1,12 @@
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\DoAnCoSo2.Data.deps.json
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\DoAnCoSo2.Data.dll
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\ref\DoAnCoSo2.Data.dll
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\DoAnCoSo2.Data.pdb
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.csproj.AssemblyReference.cache
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.AssemblyInfoInputs.cache
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.AssemblyInfo.cs
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.dll
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\ref\DoAnCoSo2.Data.dll
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.pdb
