@@ -10,3 +10,9 @@ C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.c
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.dll
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\ref\DoAnCoSo2.Data.dll
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.pdb
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\DoAnCoSo2.Data.runtimeconfig.json
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\DoAnCoSo2.Data.runtimeconfig.dev.json
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\DoAnCoSo2.DTOs.dll
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\bin\Debug\net5.0\DoAnCoSo2.DTOs.pdb
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.csproj.CopyComplete
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.Data\obj\Debug\net5.0\DoAnCoSo2.Data.genruntimeconfig.cache
