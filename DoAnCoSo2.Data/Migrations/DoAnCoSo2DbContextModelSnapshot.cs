@@ -411,6 +411,11 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Like")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<string>("Material")
                         .HasMaxLength(100)
                         .IsUnicode(true)
@@ -697,6 +702,9 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ErrorCode")
+                        .HasColumnType("int");
+
                     b.Property<string>("ErrorName")
                         .HasMaxLength(500)
                         .IsUnicode(true)
@@ -706,6 +714,9 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ErrorCode")
+                        .IsUnique();
 
                     b.ToTable("SysError");
                 });
@@ -823,6 +834,76 @@ namespace DoAnCoSo2.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SysRole");
+                });
+
+            modelBuilder.Entity("DoAnCoSo2.Data.Configuration.App.Customer_Admin_Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdminID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("IsSeen")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("MessageContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SendTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.ToTable("CustomerAdminMessage");
+                });
+
+            modelBuilder.Entity("DoAnCoSo2.Data.Configuration.App.Customer_Shop_Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("IsSeen")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("MessageContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SendTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("ShopID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("ShopID");
+
+                    b.ToTable("CustomerShopMessage");
                 });
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Address", b =>
@@ -1027,6 +1108,44 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("DoAnCoSo2.Data.Configuration.App.Customer_Admin_Message", b =>
+                {
+                    b.HasOne("DoAnCoSo2.DTOs.Auth.Admin", "Admin")
+                        .WithMany("Messages_Customer")
+                        .HasForeignKey("AdminID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DoAnCoSo2.DTOs.Auth.Customer", "Customer")
+                        .WithMany("Messages_Admin")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("DoAnCoSo2.Data.Configuration.App.Customer_Shop_Message", b =>
+                {
+                    b.HasOne("DoAnCoSo2.DTOs.Auth.Customer", "Customer")
+                        .WithMany("Messages_Shop")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DoAnCoSo2.DTOs.App.Shop", "Shop")
+                        .WithMany("Messages_Shop")
+                        .HasForeignKey("ShopID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Shop");
+                });
+
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Brand", b =>
                 {
                     b.Navigation("Products");
@@ -1062,6 +1181,8 @@ namespace DoAnCoSo2.Data.Migrations
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Shop", b =>
                 {
+                    b.Navigation("Messages_Shop");
+
                     b.Navigation("NotificationsReceived");
 
                     b.Navigation("NotificationsSent");
@@ -1073,6 +1194,8 @@ namespace DoAnCoSo2.Data.Migrations
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.Auth.Admin", b =>
                 {
+                    b.Navigation("Messages_Customer");
+
                     b.Navigation("NotificationsReceived");
 
                     b.Navigation("NotificationsSent");
@@ -1081,6 +1204,10 @@ namespace DoAnCoSo2.Data.Migrations
             modelBuilder.Entity("DoAnCoSo2.DTOs.Auth.Customer", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Messages_Admin");
+
+                    b.Navigation("Messages_Shop");
 
                     b.Navigation("NotificationsReceived");
 

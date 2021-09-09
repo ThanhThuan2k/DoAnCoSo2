@@ -25,6 +25,7 @@ namespace DoAnCoSo2.DTOs.App
 		public float? MinimumPrice { get; set; }
 		public float? MaximumPrice { get; set; }
 		public int? TotalEvaluated { get; set; }
+		public int Like { get; set; }
 		public int? TotalSold { get; set; }
 		public int QuantityOfInventory { get; set; }
 		public string Material { get; set; }

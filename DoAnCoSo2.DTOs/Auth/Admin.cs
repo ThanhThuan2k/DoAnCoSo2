@@ -1,4 +1,5 @@
-﻿using DoAnCoSo2.DTOs.App;
+﻿using DoAnCoSo2.Data.Configuration.App;
+using DoAnCoSo2.DTOs.App;
 using DoAnCoSo2.DTOs.Sys;
 using System;
 using System.Collections.Generic;
@@ -33,5 +34,6 @@ namespace DoAnCoSo2.DTOs.Auth
 		public SysRoles Role { get; set; }
 		public ICollection<Notification> NotificationsSent { get; set; }
 		public ICollection<Notification> NotificationsReceived { get; set; }
+		public ICollection<Customer_Admin_Message> Messages_Customer { get; set; }
 	}
 }

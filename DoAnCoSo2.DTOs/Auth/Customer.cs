@@ -1,4 +1,5 @@
-﻿using DoAnCoSo2.DTOs.App;
+﻿using DoAnCoSo2.Data.Configuration.App;
+using DoAnCoSo2.DTOs.App;
 using System;
 using System.Collections.Generic;
 
@@ -12,6 +13,8 @@ namespace DoAnCoSo2.DTOs.Auth
 			NotificationsSent = new HashSet<Notification>();
 			NotificationsReceived = new HashSet<Notification>();
 			Orders = new HashSet<Order>();
+			Messages_Shop = new HashSet<Customer_Shop_Message>();
+			Messages_Admin = new HashSet<Customer_Admin_Message>();
 		}
 
 		public int Id { get; set; }
@@ -32,5 +35,7 @@ namespace DoAnCoSo2.DTOs.Auth
 		public ICollection<Notification> NotificationsSent { get; set; }
 		public ICollection<Notification> NotificationsReceived { get; set; }
 		public ICollection<Order> Orders { get; set; }
+		public ICollection<Customer_Shop_Message> Messages_Shop { get; set; }
+		public ICollection<Customer_Admin_Message> Messages_Admin { get; set; }
 	}
 }

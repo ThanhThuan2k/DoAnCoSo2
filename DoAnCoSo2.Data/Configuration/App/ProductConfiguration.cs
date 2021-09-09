@@ -21,6 +21,7 @@ namespace DoAnCoSo2.Data.Configuration.App
 			builder.Property(model => model.Material).HasMaxLength(DbConstant.PRODUCT_MATERIAL_MAX_LENGTH)
 				.IsUnicode();
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
+			builder.Property(model => model.Like).HasDefaultValue(0);
 
 			builder.HasOne(model => model.Shop).WithMany(shop => shop.Products)
 				.HasForeignKey(model => model.ShopID);
