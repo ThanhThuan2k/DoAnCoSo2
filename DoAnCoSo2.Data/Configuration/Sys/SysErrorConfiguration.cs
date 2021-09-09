@@ -14,6 +14,7 @@ namespace DoAnCoSo2.Data.Configuration.Sys
 			builder.Property(model => model.ErrorName).HasMaxLength(DbConstant.SYSERROR_ERRORNAME_MAX_LENGTH)
 				.IsUnicode();
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
+			builder.HasIndex(model => model.ErrorCode).IsUnique();
 		}
 	}
 }

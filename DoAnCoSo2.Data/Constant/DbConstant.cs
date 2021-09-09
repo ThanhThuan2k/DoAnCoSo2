@@ -105,5 +105,11 @@
 
 		// order detail table
 		public const string ORDERDETAIL_TABLE_NAME = "OrderDetail";
+
+		// Customer_Shop_Message table
+		public const string CUSTOMER_SHOP_MESSAGE_TABLE_NAME = "CustomerShopMessage";
+
+		// Customer_Admin_Message table
+		public const string CUSTOMER_ADMIN_TABLE_NAME = "CustomerAdminMessage";
 	}
 }
