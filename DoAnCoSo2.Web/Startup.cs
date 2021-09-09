@@ -1,3 +1,4 @@
+using DoAnCoSo2.Data.Constant;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -59,6 +60,19 @@ namespace DoAnCoSo2.Web
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				app.UseEndpoints(endpoints =>
+					{
+						endpoints.MapControllerRoute(
+						name: "areas",
+						pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+						 );
+
+						endpoints.MapAreaControllerRoute(
+						name: AppConstant.ADMIN_AREA_NAME,
+						areaName: AppConstant.ADMIN_AREA_NAME,
+						pattern: AppConstant.ADMIN_AREA_NAME + "/{controller=Home}/{action=Index}/{id?}"
+						);
+					});
 			});
 		}
 	}
