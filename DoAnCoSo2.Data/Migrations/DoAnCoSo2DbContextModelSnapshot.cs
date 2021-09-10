@@ -522,6 +522,10 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
+                    b.Property<string>("Avatar")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
                     b.Property<DateTime?>("CreateAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -550,6 +554,16 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<bool>("IsValidEmail")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsValidPhoneNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<DateTime>("LastOnlineTime")
                         .HasColumnType("datetime2");
 
@@ -566,6 +580,9 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Property<int?>("RoleID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Salt")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Sex")
                         .HasMaxLength(20)
                         .IsUnicode(true)
@@ -581,7 +598,19 @@ namespace DoAnCoSo2.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
+
                     b.HasIndex("RoleID");
+
+                    b.HasIndex("Salt")
+                        .IsUnique()
+                        .HasFilter("[Salt] IS NOT NULL");
 
                     b.ToTable("Admin");
                 });
@@ -828,10 +857,16 @@ namespace DoAnCoSo2.Data.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("RoleCode")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleCode")
+                        .IsUnique();
 
                     b.ToTable("SysRole");
                 });

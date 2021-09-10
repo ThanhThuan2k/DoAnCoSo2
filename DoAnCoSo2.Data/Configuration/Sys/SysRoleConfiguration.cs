@@ -15,6 +15,7 @@ namespace DoAnCoSo2.Data.Configuration.Sys
 			builder.Property(model => model.Role).HasMaxLength(DbConstant.SYSROLE_ROLENAME_MAX_LENGTH)
 				.IsUnicode();
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
+			builder.HasIndex(model => model.RoleCode).IsUnique();
 		}
 	}
 }

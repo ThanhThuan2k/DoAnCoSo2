@@ -20,6 +20,7 @@
 		public const ushort ADMIN_SEX_MAX_LENGTH = SEX_MAX_LENGTH;
 		public const ushort ADMIN_PHONENUMBER_MAX_LENGTH = PHONE_NUMBER_MAX_LENGTH;
 		public const ushort ADMIN_EMAIL_MAX_LENGTH = EMAIL_MAX_LENGTH;
+		public const ushort ADMIN_AVATAR_MAX_LENGTH = AVATAR_MAX_LENGTH;
 
 		// SysRole table
 		public const string SYSROLE_TABLE_NAME = "SysRole";

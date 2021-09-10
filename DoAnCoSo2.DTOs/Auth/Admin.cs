@@ -24,13 +24,16 @@ namespace DoAnCoSo2.DTOs.Auth
 		public string Email { get; set; }
 		public bool IsBlock { get; set; }
 		public int? RoleID { get; set; }
+		public string Avatar { get; set; }
+		public string Salt { get; set; }
 		public DateTime? CreateAt { get; set; }
 		public DateTime? UpdateAt { get; set; }
 		public DateTime? DeleteAt { get; set; }
 		public bool IsTwoFactorEnabled { get; set; }
 		public DateTime LastOnlineTime { get; set; }
 		public int AccessFailCount { get; set; }
-
+		public bool IsValidEmail { get; set; }
+		public bool IsValidPhoneNumber { get; set; }
 		public SysRoles Role { get; set; }
 		public ICollection<Notification> NotificationsSent { get; set; }
 		public ICollection<Notification> NotificationsReceived { get; set; }

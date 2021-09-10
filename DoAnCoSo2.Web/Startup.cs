@@ -1,4 +1,10 @@
+using DoAnCoSo2.Data;
+using DoAnCoSo2.Data.Common;
 using DoAnCoSo2.Data.Constant;
+using DoAnCoSo2.Data.Interfaces.Repositories;
+using DoAnCoSo2.Data.Repositories.Auth;
+using DoAnCoSo2.Data.Repositories.Sys;
+using DoAnCoSo2.Data.Services.CRUDService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using System;
 
 namespace DoAnCoSo2.Web
 {
@@ -38,6 +45,17 @@ namespace DoAnCoSo2.Web
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "DoAnCoSo2.Web", Version = "v1" });
 			});
+
+			services.AddDbContext<DoAnCoSo2DbContext>();
+			services.AddScoped<JwtService>();
+			services.AddScoped<IAdminRepository, AdminRepository>();
+			services.AddScoped<ISysErrorRepository, SysErrorRepository>();
+			services.AddScoped(typeof(CRUDService));
+
+			services.AddControllersWithViews().AddNewtonsoftJson(
+				option =>
+			option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+		);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,12 +67,16 @@ namespace DoAnCoSo2.Web
 				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DoAnCoSo2.Web v1"));
+
+				app.UseHttpsRedirection();
+				app.UseCors(option => option.AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 			}
 
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
