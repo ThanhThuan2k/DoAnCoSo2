@@ -18,8 +18,4 @@
     <ProjectReference Include="..\DoAnCoSo2.DTOs\DoAnCoSo2.DTOs.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
 </Project>

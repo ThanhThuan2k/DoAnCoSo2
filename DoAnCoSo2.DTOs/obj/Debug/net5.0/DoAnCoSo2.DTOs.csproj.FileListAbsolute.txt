@@ -2,7 +2,6 @@ C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\bin\Debug\net5.0\DoAnCoSo2.DTOs.d
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\bin\Debug\net5.0\DoAnCoSo2.DTOs.dll
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\bin\Debug\net5.0\ref\DoAnCoSo2.DTOs.dll
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\bin\Debug\net5.0\DoAnCoSo2.DTOs.pdb
-C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.csproj.AssemblyReference.cache
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.AssemblyInfoInputs.cache
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.AssemblyInfo.cs
@@ -10,3 +9,4 @@ C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.c
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.dll
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\ref\DoAnCoSo2.DTOs.dll
 C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.pdb
+C:\Users\ASUS\Desktop\DoAnCoSo2\DoAnCoSo2.DTOs\obj\Debug\net5.0\DoAnCoSo2.DTOs.csproj.AssemblyReference.cache

@@ -13,6 +13,7 @@ namespace DoAnCoSo2.DTOs.Sys
 
 		public int Id { get; set; }
 		public string Role { get; set; }
+		public int RoleCode { get; set; }
 		public DateTime? CreateAt { get; set; }
 		public DateTime? DeleteAt { get; set; }
 		public DateTime? UpdateAt { get; set; }

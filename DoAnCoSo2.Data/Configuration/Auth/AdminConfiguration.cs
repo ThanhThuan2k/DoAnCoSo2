@@ -28,10 +28,16 @@ namespace DoAnCoSo2.Data.Configuration.Auth
 				.IsUnicode();
 			builder.Property(model => model.Email).HasMaxLength(DbConstant.ADMIN_EMAIL_MAX_LENGTH)
 				.IsUnicode();
+			builder.HasIndex(model => model.Email).IsUnique();
+			builder.HasIndex(model => model.PhoneNumber).IsUnique();
 			builder.Property(model => model.IsBlock).HasDefaultValue(false);
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
 			builder.Property(model => model.IsTwoFactorEnabled).HasDefaultValue(false);
 			builder.Property(model => model.AccessFailCount).HasDefaultValue(0);
+			builder.Property(model => model.IsValidEmail).HasDefaultValue(false);
+			builder.Property(model => model.IsValidPhoneNumber).HasDefaultValue(false);
+			builder.Property(model => model.Avatar).HasMaxLength(DbConstant.ADMIN_AVATAR_MAX_LENGTH);
+			builder.HasIndex(model => model.Salt).IsUnique();
 
 			builder.HasOne(model => model.Role).WithMany(role => role.Admins)
 				.HasForeignKey(model => model.RoleID);
