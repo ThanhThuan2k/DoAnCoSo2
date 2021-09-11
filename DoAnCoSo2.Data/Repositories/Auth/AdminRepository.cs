@@ -438,5 +438,10 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 				Error = null
 			};
 		}
+
+		public async Task<StandardResponse> BlockYourself(string salt)
+		{
+			return null;
+		}
 	}
 }

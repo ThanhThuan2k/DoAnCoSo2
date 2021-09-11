@@ -39,6 +39,20 @@ namespace DoAnCoSo2.Web
 					.AllowAnyMethod().AllowAnyHeader());
 			});
 
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(opt => {
+					opt.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateIssuer = true,
+						ValidateAudience = true,
+						ValidateLifetime = true,
+						ValidateIssuerSigningKey = true,
+						ValidIssuer = AppConstant.ISSUER,
+						ValidAudience = AppConstant.ISSUER,
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.SECURITY_KEY))
+					};
+				});
+
 			// Json Serialize
 			services.AddControllersWithViews().AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)

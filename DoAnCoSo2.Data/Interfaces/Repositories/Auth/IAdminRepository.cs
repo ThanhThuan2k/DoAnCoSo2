@@ -29,5 +29,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories
 		Task<StandardResponse> Block(int id);
 		Task<StandardResponse> RestoreDeleted(int id);
 		Task<StandardResponse> GetAll();
+		Task<StandardResponse> BlockYourself(string salt);
 	}
 }

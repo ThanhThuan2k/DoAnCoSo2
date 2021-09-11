@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DoAnCoSo2.Web.Areas.Admin.Controllers
@@ -76,7 +77,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 					}
 					else
 					{
-						string jwt = JwtService.General(admin.Salt, admin);
+						string jwt = JwtService.General(admin);
 						Response.Cookies.Append("jwt", jwt);
 						await IAdminRepository.ResetAccessFailCount(admin.Email);
 						//var user = HttpContext.User.Claims.Where(x => )
@@ -114,6 +115,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost("logout")]
+		[AllowAnonymous]
 		public IActionResult Logout()
 		{
 			if (String.IsNullOrEmpty(Request.Cookies["jwt"]))
@@ -144,7 +146,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 
 		#region CRUD
 		[HttpPost("create")]
-		[AllowAnonymous]
+		[Authorize(Roles = "SysAdmin, CreatorAdmin")]
 		public async Task<IActionResult> Create(SignUpViewModel model)
 		{
 			if ((String.IsNullOrEmpty(model.Email.Trim()) && String.IsNullOrEmpty(model.PhoneNumber.Trim())) || String.IsNullOrEmpty(model.Password))
@@ -238,6 +240,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPut("update")]
+		[Authorize(Roles = "Admin, SysAdmin, SecurityAdmin, CreatorAdmin")]
 		public async Task<IActionResult> Update(UpdateViewModel model)
 		{
 			model.UpdateAt = DateTime.Now;
@@ -246,10 +249,11 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet("get/{id}")]
+		[Authorize(Roles = "Admin, SysAdmin, SecurityAdmin, CreatorAdmin")]
 		public async Task<IActionResult> Get(int id = 0)
 		{
 			var admin = await IAdminRepository.Get(id);
-			if(admin == null)
+			if (admin == null)
 			{
 				return Ok(new StandardResponse()
 				{
@@ -277,6 +281,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpDelete("delete/{id}")]
+		[Authorize(Roles = "SysAdmin, SecurityAdmin")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			StandardResponse response = await IAdminRepository.Delete(id);
@@ -284,6 +289,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPut("unblock/{id}")]
+		[Authorize(Roles = "SysAdmin, SecurityAdmin")]
 		public async Task<IActionResult> Unblock(int id)
 		{
 			StandardResponse response = await IAdminRepository.Unblock(id);
@@ -291,13 +297,43 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPut("block/{id}")]
+		[Authorize(Roles = "SysAdmin, SecurityAdmin")]
 		public async Task<IActionResult> Block(int id)
 		{
-			StandardResponse response = await IAdminRepository.Block(id);
-			return Ok(response);
+			return Ok(await IAdminRepository.Block(id));
+		}
+
+		[HttpPut("blockyourself")]
+		[Authorize(Roles = "Admin, SysAdmin, SecurityAdmin, CreatorAdmin")]
+		public async Task<IActionResult> BlockYourself(DateTime? blockTo)
+		{
+			if (blockTo == null)
+			{
+				blockTo = DateTime.Today.AddDays(1);
+			}
+			var currentUser = HttpContext.User.Identity as ClaimsIdentity;
+			if (currentUser != null)
+			{
+				string salt = currentUser.FindFirst("salt").Value;
+				return Ok(true);
+			}
+			else
+			{
+				return Ok(new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = null,
+					Error = new StandardError()
+					{
+						ErrorCode = 1504,
+						ErrorMessage = ISysErrorRepository.GetName(1504)
+					}
+				});
+			}
 		}
 
 		[HttpPut("restore/{id}")]
+		[Authorize(Roles = "SysAdmin")]
 		public async Task<IActionResult> Restore(int id)
 		{
 			StandardResponse response = await IAdminRepository.RestoreDeleted(id);
@@ -305,6 +341,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet("all")]
+		[Authorize(Roles = "Admin, SysAdmin")]
 		public async Task<IActionResult> GetAll()
 		{
 			StandardResponse result = await IAdminRepository.GetAll();

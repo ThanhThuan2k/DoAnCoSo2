@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DoAnCoSo2.Web.Areas.Admin.Controllers
@@ -27,6 +28,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet("all")]
+		[Authorize(Roles = "Admin, SysAdmin, SecurityAdmin, CreatorAdmin")]
 		public async Task<IActionResult> GetAll()
 		{
 			StandardResponse response = await ICustomerRepository.GetAll();
@@ -34,6 +36,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet("get/{id}")]
+		[Authorize(Roles = "Admin, SysAdmin, SecurityAdmin, CreatorAdmin")]
 		public async Task<IActionResult> Get(int id)
 		{
 			StandardResponse response = await ICustomerRepository.Get(id);
@@ -41,6 +44,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPut("restore/{id}")]
+		[Authorize(Roles = "Admin, SysAdmin, SecurityAdmin")]
 		public async Task<IActionResult> Restore(int id)
 		{
 			return Ok(await ICustomerRepository.Restore(id));

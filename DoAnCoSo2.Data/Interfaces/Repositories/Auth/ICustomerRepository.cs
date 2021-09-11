@@ -23,5 +23,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.Auth
 		bool IsExistPhoneNumber(string phone);
 		bool IsExistSalt(string salt);
 		Task<StandardResponse> Restore(int id);
+		Task<StandardResponse> Login(LoginRequestModel model);
 	}
 }

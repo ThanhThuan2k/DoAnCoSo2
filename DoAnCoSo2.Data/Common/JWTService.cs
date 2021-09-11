@@ -31,16 +31,27 @@ namespace DoAnCoSo2.Data.Common
 			return new JwtSecurityTokenHandler().WriteToken(securityToken);
 		}
 
-		public string General(string salt, Admin admin)
+		public string General(Admin admin)
 		{
 			var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.SECURITY_KEY));
 			var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
 			var header = new JwtHeader(credentials);
-			var claims = new List<Claim>();
-			claims.Add(new Claim(ClaimTypes.Role, "rolehaha"));
-			var payload = new JwtPayload(salt, null, claims, null, DateTime.Today.AddDays(1));
-			var securityToken = new JwtSecurityToken(header, payload);
-			return new JwtSecurityTokenHandler().WriteToken(securityToken);
+			var claims = new[]
+			{
+				new Claim(JwtRegisteredClaimNames.Sub, admin.Username),
+				new Claim(JwtRegisteredClaimNames.Email, admin.Email),
+				new Claim("salt", admin.Salt),
+				new Claim(ClaimTypes.Role, admin.Role.Role)
+			};
+
+			var token = new JwtSecurityToken(
+					issuer: AppConstant.ISSUER,
+					audience: AppConstant.ISSUER,
+					claims,
+					expires: DateTime.Now.AddMinutes(120),
+					signingCredentials: credentials
+				);
+			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
 		public JwtSecurityToken Verify(string jwt)

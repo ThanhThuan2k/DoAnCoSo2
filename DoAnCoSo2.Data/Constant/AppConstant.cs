@@ -12,5 +12,6 @@ namespace DoAnCoSo2.Data.Constant
 		public const string NOT_UPDATE_ATTRIBUTE = "NotUpdate";
 		public const string SHOP_AREA_NAME = "Shop";
 		public const string SECURITY_KEY = "Huỳnh Thanh Thuận";
+		public const string ISSUER = "thuanhuynh.190800@gmail.com";
 	}
 }

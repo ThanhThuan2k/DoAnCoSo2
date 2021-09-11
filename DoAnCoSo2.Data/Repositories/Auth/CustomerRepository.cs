@@ -374,5 +374,9 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 				};
 			}
 		}
+		public async Task<StandardResponse> Login(LoginRequestModel model)
+		{
+
+		}
 	}
 }
