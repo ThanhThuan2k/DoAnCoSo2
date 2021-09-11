@@ -2,6 +2,7 @@
 using DoAnCoSo2.Data.Common;
 using DoAnCoSo2.Data.Interfaces.Repositories.Auth;
 using DoAnCoSo2.Data.Services.CRUDService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;

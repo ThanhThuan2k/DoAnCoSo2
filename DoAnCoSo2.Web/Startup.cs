@@ -6,14 +6,17 @@ using DoAnCoSo2.Data.Interfaces.Repositories.Auth;
 using DoAnCoSo2.Data.Repositories.Auth;
 using DoAnCoSo2.Data.Repositories.Sys;
 using DoAnCoSo2.Data.Services.CRUDService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Text;
 
 namespace DoAnCoSo2.Web
 {
@@ -96,6 +99,13 @@ namespace DoAnCoSo2.Web
 						areaName: AppConstant.ADMIN_AREA_NAME,
 						pattern: AppConstant.ADMIN_AREA_NAME + "/{controller=Home}/{action=Index}/{id?}"
 						);
+
+						endpoints.MapAreaControllerRoute(
+								name: AppConstant.SHOP_AREA_NAME,
+								areaName: AppConstant.SHOP_AREA_NAME,
+								pattern: AppConstant.SHOP_AREA_NAME + "/{controller=Home}/{action=Index}/{id?}"
+						);
+
 					});
 			});
 		}

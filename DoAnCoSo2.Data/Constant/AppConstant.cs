@@ -10,5 +10,7 @@ namespace DoAnCoSo2.Data.Constant
 	{
 		public const string ADMIN_AREA_NAME = "Admin";
 		public const string NOT_UPDATE_ATTRIBUTE = "NotUpdate";
+		public const string SHOP_AREA_NAME = "Shop";
+		public const string SECURITY_KEY = "Huỳnh Thanh Thuận";
 	}
 }
