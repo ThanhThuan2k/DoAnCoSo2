@@ -32,8 +32,8 @@ namespace DoAnCoSo2.DTOs.App
 		public int ShopID { get; set; }
 		public string Description { get; set; }
 		public DateTime CreateAt { get; set; }
-		public DateTime UpdateAt { get; set; }
-		public DateTime DeleteAt { get; set; }
+		public DateTime? UpdateAt { get; set; }
+		public DateTime? DeleteAt { get; set; }
 
 		public Shop Shop { get; set; }
 		public Brand Brand { get; set; }

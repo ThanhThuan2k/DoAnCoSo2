@@ -2,6 +2,7 @@ using DoAnCoSo2.Data;
 using DoAnCoSo2.Data.Common;
 using DoAnCoSo2.Data.Constant;
 using DoAnCoSo2.Data.Interfaces.Repositories;
+using DoAnCoSo2.Data.Interfaces.Repositories.Auth;
 using DoAnCoSo2.Data.Repositories.Auth;
 using DoAnCoSo2.Data.Repositories.Sys;
 using DoAnCoSo2.Data.Services.CRUDService;
@@ -51,6 +52,7 @@ namespace DoAnCoSo2.Web
 			services.AddScoped<IAdminRepository, AdminRepository>();
 			services.AddScoped<ISysErrorRepository, SysErrorRepository>();
 			services.AddScoped(typeof(CRUDService));
+			services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 			services.AddControllersWithViews().AddNewtonsoftJson(
 				option =>

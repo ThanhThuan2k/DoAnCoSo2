@@ -28,8 +28,8 @@ namespace DoAnCoSo2.DTOs.App
 		public int EvaluatedID { get; set; }
 		public int? ReplyCommentID { get; set; }
 		public DateTime CreateAt { get; set; }
-		public DateTime UpdateAt { get; set; }
-		public DateTime DeleteAt { get; set; }
+		public DateTime? UpdateAt { get; set; }
+		public DateTime? DeleteAt { get; set; }
 
 		public Comment RootComment { get; set; }
 		public ICollection<Comment> ReplyComments { get; set; }

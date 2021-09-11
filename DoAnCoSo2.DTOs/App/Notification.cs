@@ -30,8 +30,8 @@ namespace DoAnCoSo2.DTOs.App
 		public bool IsRead { get; set; }
 		public string Url { get; set; }
 		public DateTime CreateAt { get; set; }
-		public DateTime UpdateAt { get; set; }
-		public DateTime DeleteAt { get; set; }
+		public DateTime? UpdateAt { get; set; }
+		public DateTime? DeleteAt { get; set; }
 		
 		public Shop FromShop { get; set; }
 		public Shop ToShop { get; set; }

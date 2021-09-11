@@ -74,5 +74,23 @@ namespace DoAnCoSo2.Data.Services.CRUDService
 				};
 			}
 		}
+
+		public virtual async Task<bool> RestoreAsync<TTable>(int id) where TTable : class
+		{
+			try
+			{
+				var query = "UPDATE " + this.GetTableName<TTable>()
+							+ " SET " + RESTORE_QUERY
+							+ " WHERE " + KEY + "=" + id;
+
+				await db.Database.ExecuteSqlRawAsync(query);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				return false;
+			}
+		}
 	}
 }
