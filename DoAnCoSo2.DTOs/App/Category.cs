@@ -14,8 +14,8 @@ namespace DoAnCoSo2.DTOs.App
 		public string Name { get; set; }
 		public string Avatar { get; set; }
 		public DateTime CreateAt { get; set; }
-		public DateTime UpdateAt { get; set; }
-		public DateTime DeleteAt { get; set; }
+		public DateTime? UpdateAt { get; set; }
+		public DateTime? DeleteAt { get; set; }
 		
 		public ICollection<Product> Products { get; set; }
 	}

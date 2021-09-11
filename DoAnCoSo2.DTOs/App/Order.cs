@@ -14,8 +14,8 @@ namespace DoAnCoSo2.DTOs.App
 		public int Id { get; set; }
 		public int CustomerID { get; set; }
 		public DateTime OrderTime { get; set; }
-		public DateTime DeleteAt { get; set; }
-		public DateTime UpdateAt { get; set; }
+		public DateTime? DeleteAt { get; set; }
+		public DateTime? UpdateAt { get; set; }
 
 		public Customer Customer { get; set; }
 		public ICollection<OrderDetail> OrderDetails { get; set; }

@@ -24,6 +24,7 @@ namespace DoAnCoSo2.DTOs.Auth
 		public string PhoneNumber { get; set; }
 		public string Username { get; set; }
 		public string Password { get; set; }
+		public string Salt { get; set; }
 		public DateTime? DateOfBirth { get; set; }
 		public string Avatar { get; set; }
 		public DateTime? CreateAt { get; set; }

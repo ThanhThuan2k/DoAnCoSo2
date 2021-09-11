@@ -21,8 +21,8 @@ namespace DoAnCoSo2.DTOs.App
 		public bool Paid { get; set; }
 		public DateTime PaidAt { get; set; }
 		public DateTime CreateAt { get; set; }
-		public DateTime DeleteAt { get; set; }
-		public DateTime UpdateAt { get; set; }
+		public DateTime? DeleteAt { get; set; }
+		public DateTime? UpdateAt { get; set; }
 
 		public SysOrderStatus Status { get; set; }
 		public Order Order { get; set; }

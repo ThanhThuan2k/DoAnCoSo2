@@ -14,7 +14,7 @@ namespace DoAnCoSo2.DTOs.App
 		public int ProductID { get; set; }
 		public int CommentID { get; set; }
 		public DateTime CreateAt { get; set; }
-		public DateTime DeleteAt { get; set; }
+		public DateTime? DeleteAt { get; set; }
 
 		public Product Product { get; set; }
 		public Comment Comment { get; set; }

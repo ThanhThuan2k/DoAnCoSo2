@@ -16,10 +16,10 @@ namespace DoAnCoSo2.Data.Configuration.App
 		{
 			builder.ToTable(DbConstant.ADDRESS_TABLE_NAME);
 			builder.HasKey(model => model.Id);
-			builder.Property(model => model.FullName).HasMaxLength(DbConstant.ADDRESS_FULLNAME_MAX_LENGTH)
+			builder.Property(model => model.FullAddress).HasMaxLength(DbConstant.ADDRESS_FULLNAME_MAX_LENGTH)
 				.IsRequired();
 			builder.Property(model => model.PhoneNumber).HasMaxLength(DbConstant.ADDRESS_PHONENUMBER_MAX_LENGTH);
-			builder.Property(model => model.ReceiverAddress).HasMaxLength(DbConstant.ADDRESS_ADDRESS_MAX_LENGTH)
+			builder.Property(model => model.Receiver).HasMaxLength(DbConstant.ADDRESS_ADDRESS_MAX_LENGTH)
 				.IsUnicode();
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
 
