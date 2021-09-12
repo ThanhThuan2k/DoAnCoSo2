@@ -11,16 +11,14 @@ namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 {
 	[ApiController]
 	[Area(AppConstant.SHOP_AREA_NAME)]
-	[Route("api/[area]/[controller]")]
+	[Route("api.v3/[controller]")]
 	public class ShopControllerBase : Controller
 	{
 		private IWebHostEnvironment Host;
-		private IShopRepository IShopRepository;
 
-		public ShopControllerBase(IWebHostEnvironment _host, IShopRepository _shopRepo)
+		public ShopControllerBase(IWebHostEnvironment _host)
 		{
 			Host = _host;
-			IShopRepository = _shopRepo;
 		}
 	}
 }

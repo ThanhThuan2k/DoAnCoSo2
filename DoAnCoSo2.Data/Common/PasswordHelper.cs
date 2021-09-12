@@ -29,12 +29,12 @@ namespace DoAnCoSo2.Data.Common
 
         public static string RandomNumber(int min, int max)
         {
-            //const string mailCOLLECTION_CHARS = "0123456789";
+            const string NUM_CHARS = "0123456789";
             Random rand = new Random();
             char[] salt = new char[rand.Next(min, max)];
             for (int i = 0; i < salt.Length; i++)
             {
-                salt[i] = COLLECTION_CHARS[rand.Next(COLLECTION_CHARS.Length)];
+                salt[i] = NUM_CHARS[rand.Next(NUM_CHARS.Length)];
             }
 
             string result = new String(salt);

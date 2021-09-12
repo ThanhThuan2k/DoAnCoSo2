@@ -22,6 +22,7 @@ namespace DoAnCoSo2.Data.Configuration.App
 				.IsUnicode();
 			builder.Property(model => model.Avatar).HasMaxLength(DbConstant.SHOP_AVATAR_MAX_LENGTH)
 				.IsUnicode();
+			builder.Property(model => model.Follower).HasDefaultValue(0);
 			builder.Property(model => model.ShopUri).HasMaxLength(DbConstant.SHOP_URI_MAX_LENGTH);
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
 			builder.HasOne(model => model.Customer).WithOne(customer => customer.Shop)

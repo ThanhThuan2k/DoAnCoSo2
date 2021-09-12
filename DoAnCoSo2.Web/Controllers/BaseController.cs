@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DoAnCoSo2.Web.Controllers
 {
 	[ApiController]
-	[Route("api/[controller]")]
+	[Route("api.v2/[controller]")]
 	public class BaseController : Controller
 	{
 		private readonly IWebHostEnvironment Host;

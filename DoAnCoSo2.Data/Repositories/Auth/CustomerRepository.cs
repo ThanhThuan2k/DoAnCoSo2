@@ -376,7 +376,59 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 		}
 		public async Task<StandardResponse> Login(LoginRequestModel model)
 		{
+			var customer = GetByPhoneNumber(model.PhoneNumber);
+			if (customer == null)
+			{
+				return new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = new
+					{
+						PhoneNumber = model.PhoneNumber
+					},
+					Error = new StandardError()
+					{
+						ErrorCode = 1404,
+						ErrorMessage = Error.GetName(1404)
+					}
+				};
+			}
+			else
+			{
+				bool isRightPassword = BCrypt.Net.BCrypt.Verify(model.Password, customer.Password);
+				if (!isRightPassword)
+				{
+					return new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = new
+						{
+							PhoneNumber = model.PhoneNumber,
+							Password = model.Password
+						},
+						Error = new StandardError()
+						{
+							ErrorCode = 1505,
+							ErrorMessage = Error.GetName(1505)
+						}
+					};
+				}
+				else
+				{
+					string token = JwtService.General(customer);
+					return new StandardResponse()
+					{
+						IsSuccess = true,
+						Payload = token,
+						Error = null
+					};
+				}
+			}
+		}
 
+		public Customer GetByPhoneNumber(string phoneNumber)
+		{
+			return db.Customers.SingleOrDefault(x => x.PhoneNumber == phoneNumber);
 		}
 	}
 }
