@@ -88,7 +88,8 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 							Payload = new
 							{
 								Fullname = admin.FullName,
-								Sex = admin.Sex
+								Sex = admin.Sex,
+								Token = jwt
 							}
 						});
 					}

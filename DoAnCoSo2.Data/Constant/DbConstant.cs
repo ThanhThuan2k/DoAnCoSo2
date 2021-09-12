@@ -51,6 +51,8 @@
 		public const ushort SHOP_ADDRESS_MAX_LENGTH = ADDRESS_MAX_LENGTH;
 		public const ushort SHOP_AVATAR_MAX_LENGTH = AVATAR_MAX_LENGTH;
 		public const ushort SHOP_URI_MAX_LENGTH = 1000;
+		public const ushort SHOP_NAME_MAX_LENGTH = 1000;
+		public const ushort SHOP_NICKNAME_MAX_LENGTH = 1000;
 
 		// SysNotification table
 		public const string SYSNOTIFICATION_TABLE_NAME = "SysNotification";

@@ -11,7 +11,7 @@ namespace DoAnCoSo2.Data.Common
 {
 	public class JwtService
 	{
-		public string General(int id)
+		public static string General(int id)
 		{
 			var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.SECURITY_KEY));
 			var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -21,7 +21,7 @@ namespace DoAnCoSo2.Data.Common
 			return new JwtSecurityTokenHandler().WriteToken(securityToken);
 		}
 
-		public string General(string salt)
+		public static string General(string salt)
 		{
 			var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.SECURITY_KEY));
 			var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -31,7 +31,7 @@ namespace DoAnCoSo2.Data.Common
 			return new JwtSecurityTokenHandler().WriteToken(securityToken);
 		}
 
-		public string General(Admin admin)
+		public static string General(Admin admin)
 		{
 			var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.SECURITY_KEY));
 			var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -54,7 +54,58 @@ namespace DoAnCoSo2.Data.Common
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
-		public JwtSecurityToken Verify(string jwt)
+		public static string General(Customer customer)
+		{
+			var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.SECURITY_KEY));
+			var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
+			var header = new JwtHeader(credentials);
+			var claims = new[]
+			{
+				new Claim(JwtRegisteredClaimNames.Sub, customer.Username),
+				new Claim(JwtRegisteredClaimNames.Email, customer.Email),
+				new Claim("phone", customer.PhoneNumber),
+				new Claim("salt", customer.Salt),
+				new Claim(ClaimTypes.Role, "Customer")
+			};
+
+			var token = new JwtSecurityToken(
+					issuer: AppConstant.ISSUER,
+					audience: AppConstant.ISSUER,
+					claims,
+					expires: DateTime.Now.AddMinutes(120),
+					signingCredentials: credentials
+				);
+			return new JwtSecurityTokenHandler().WriteToken(token);
+		}
+
+
+		public static string General(Customer customer, string newRole)
+		{
+			var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstant.SECURITY_KEY));
+			var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
+			var header = new JwtHeader(credentials);
+			var claims = new[]
+			{
+				new Claim(JwtRegisteredClaimNames.Sub, customer.Username),
+				new Claim(JwtRegisteredClaimNames.Email, customer.Email),
+				new Claim("phone", customer.PhoneNumber),
+				new Claim("salt", customer.Salt),
+				new Claim("shopuri", customer.Shop.ShopUri),
+				new Claim(ClaimTypes.Role, "Customer"),
+				new Claim(ClaimTypes.Role, newRole)
+			};
+
+			var token = new JwtSecurityToken(
+					issuer: AppConstant.ISSUER,
+					audience: AppConstant.ISSUER,
+					claims,
+					expires: DateTime.Now.AddMinutes(120),
+					signingCredentials: credentials
+				);
+			return new JwtSecurityTokenHandler().WriteToken(token);
+		}
+
+		public static JwtSecurityToken Verify(string jwt)
 		{
 			var tokenHandle = new JwtSecurityTokenHandler();
 			//var key = Encoding.ASCII.GetBytes(SecurityKey);
