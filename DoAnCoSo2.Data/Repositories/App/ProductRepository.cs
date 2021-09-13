@@ -1,5 +1,6 @@
 ﻿using DoAnCoSo2.Data.Common;
 using DoAnCoSo2.Data.Interfaces.Repositories.App;
+using DoAnCoSo2.Data.ViewModels.App;
 using DoAnCoSo2.DTOs.App;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,6 +31,50 @@ namespace DoAnCoSo2.Data.Repositories.App
 				Error = null,
 				Payload = result
 			};
+		}
+
+		public async Task<List<ProductViewModel>> GetAll(string shopUri)
+		{
+			return await db.Shops.AsNoTracking()
+				.Where(x => x.ShopUri == shopUri && x.DeleteAt == null)
+				.Include(x => x.Products)
+				.ThenInclude(x => x.Brand)
+				.Select(x => x.Products.Select(x => new ProductViewModel()
+				{
+					Id = x.Id,
+					ProductName = x.ProductName,
+					Price = x.Price,
+					MinimumPrice = x.MinimumPrice,
+					MaximumPrice = x.MaximumPrice,
+					TotalEvaluated = x.TotalEvaluated,
+					Like = x.Like,
+					TotalSold = x.TotalSold,
+					QuantityOfInventory = x.QuantityOfInventory,
+					Material = x.Material,
+					Description = x.Description,
+					CreateAt = x.CreateAt,
+					Brand = new BrandViewModel()
+					{
+						Id = x.Brand.Id,
+						Name = x.Brand.Name,
+						Avatar = x.Brand.Avatar,
+						CreateAt = x.Brand.CreateAt
+					},
+					Category = new CategoryViewModel()
+					{
+						Id = x.Category.Id,
+						Name = x.Category.Name,
+						Avatar = x.Category.Avatar,
+						CreateAt = x.Category.CreateAt
+					},
+					Images = x.Images.Select(x => new ImageViewModel()
+					{
+						Id = x.Id,
+						Url = x.Url,
+						CreateAt = x.CreateAt
+					}).ToList()
+				}).ToList()
+				).SingleOrDefaultAsync();
 		}
 	}
 }

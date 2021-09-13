@@ -7,6 +7,7 @@ using DoAnCoSo2.Data.ViewModels.App;
 using DoAnCoSo2.Data.ViewModels.Auth;
 using DoAnCoSo2.DTOs.Auth;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,12 +19,14 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 		private readonly DoAnCoSo2DbContext db;
 		private readonly CRUDService Service;
 		private ISysErrorRepository Error;
+		private IConfiguration IConfiguration;
 
-		public CustomerRepository(DoAnCoSo2DbContext _db, CRUDService _service, ISysErrorRepository _error)
+		public CustomerRepository(DoAnCoSo2DbContext _db, CRUDService _service, ISysErrorRepository _error, IConfiguration _config)
 		{
 			db = _db;
 			Service = _service;
 			Error = _error;
+			IConfiguration = _config;
 		}
 
 		public async Task<StandardResponse> GetAll()
@@ -429,6 +432,36 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 		public Customer GetByPhoneNumber(string phoneNumber)
 		{
 			return db.Customers.SingleOrDefault(x => x.PhoneNumber == phoneNumber);
+		}
+
+		public async Task<StandardResponse> UploadAvatar(string adminSalt, string path)
+		{
+			Customer customer = await db.Customers.SingleOrDefaultAsync(x => x.Salt == adminSalt);
+			string thisDomain = IConfiguration.GetSection("Domain").Value;
+			if (customer != null)
+			{
+				customer.Avatar = thisDomain + path;
+				await db.SaveChangesAsync();
+				return new StandardResponse()
+				{
+					IsSuccess = true,
+					Payload = new { URL = thisDomain + path },
+					Error = null
+				};
+			}
+			else
+			{
+				return new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = new { URL = thisDomain + path },
+					Error = new StandardError()
+					{
+						ErrorCode = 1404,
+						ErrorMessage = Error.GetName(1404)
+					}
+				};
+			}
 		}
 	}
 }

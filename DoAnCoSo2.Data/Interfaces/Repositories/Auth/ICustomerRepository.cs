@@ -25,5 +25,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.Auth
 		Task<StandardResponse> Restore(int id);
 		Task<StandardResponse> Login(LoginRequestModel model);
 		Customer GetByPhoneNumber(string phone);
+		Task<StandardResponse> UploadAvatar(string salt, string path);
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using DoAnCoSo2.Data.Common;
+using DoAnCoSo2.Data.ViewModels.App;
 using DoAnCoSo2.DTOs.App;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 	public interface IProductRepository
 	{
 		Task<StandardResponse> Search(string searchString);
+		Task<List<ProductViewModel>> GetAll(string shopUri);
 	}
 }

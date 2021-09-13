@@ -4,6 +4,7 @@ using DoAnCoSo2.Data.Services.CRUDService;
 using DoAnCoSo2.Data.ViewModels.Auth;
 using DoAnCoSo2.DTOs.Auth;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,10 +14,14 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 	public class AdminRepository : IAdminRepository
 	{
 		private readonly DoAnCoSo2DbContext db;
+		private readonly ISysErrorRepository ISysErrorRepository;
+		private readonly IConfiguration IConfiguration;
 
-		public AdminRepository(DoAnCoSo2DbContext _db)
+		public AdminRepository(DoAnCoSo2DbContext _db, ISysErrorRepository _errorRepo, IConfiguration _iconfig)
 		{
 			db = _db;
+			ISysErrorRepository = _errorRepo;
+			IConfiguration = _iconfig;
 		}
 
 		public Admin GetAdminByEmail(string email)
@@ -442,6 +447,36 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 		public async Task<StandardResponse> BlockYourself(string salt)
 		{
 			return null;
+		}
+
+		public async Task<StandardResponse> UploadAvatar(string adminSalt, string path)
+		{
+			Admin admin = await db.Admins.SingleOrDefaultAsync(x => x.Salt == adminSalt);
+			string thisDomain = IConfiguration.GetSection("Domain").Value;
+			if (admin != null)
+			{
+				admin.Avatar = thisDomain + path;
+				await db.SaveChangesAsync();
+				return new StandardResponse()
+				{
+					IsSuccess = true,
+					Payload = new { URL = thisDomain + path },
+					Error = null
+				};
+			}
+			else
+			{
+				return new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = new { URL = thisDomain + path },
+					Error = new StandardError()
+					{
+						ErrorCode = 1404,
+						ErrorMessage = ISysErrorRepository.GetName(1404)
+					}
+				};
+			}
 		}
 	}
 }
