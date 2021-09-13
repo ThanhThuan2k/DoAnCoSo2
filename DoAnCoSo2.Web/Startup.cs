@@ -96,7 +96,7 @@ namespace DoAnCoSo2.Web
 			}
 
 			app.UseHttpsRedirection();
-
+			app.UseStaticFiles();
 			app.UseRouting();
 
 			app.UseAuthentication();

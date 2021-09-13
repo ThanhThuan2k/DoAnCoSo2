@@ -30,5 +30,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories
 		Task<StandardResponse> RestoreDeleted(int id);
 		Task<StandardResponse> GetAll();
 		Task<StandardResponse> BlockYourself(string salt);
+		Task<StandardResponse> UploadAvatar(string adminSalt, string path);
 	}
 }

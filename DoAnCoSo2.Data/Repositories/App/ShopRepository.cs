@@ -5,6 +5,7 @@ using DoAnCoSo2.Data.RequestModel.Shop;
 using DoAnCoSo2.DTOs.App;
 using DoAnCoSo2.DTOs.Auth;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,12 @@ namespace DoAnCoSo2.Data.Repositories.App
 	{
 		private readonly DoAnCoSo2DbContext db;
 		private readonly ISysErrorRepository ISysErrorRepository;
-		public ShopRepository(DoAnCoSo2DbContext _db, ISysErrorRepository _error)
+		private IConfiguration IConfiguration;
+		public ShopRepository(DoAnCoSo2DbContext _db, ISysErrorRepository _error, IConfiguration _config)
 		{
 			db = _db;
 			ISysErrorRepository = _error;
+			IConfiguration = _config;
 		}
 
 		public async Task<Customer> GetCustomer(string salt)
@@ -123,6 +126,36 @@ namespace DoAnCoSo2.Data.Repositories.App
 		public async Task<List<Shop>> Search(string searchString)
 		{
 			return await db.Shops.AsNoTracking().Where(x => x.Name.Contains(searchString) || x.Nickname.Contains(searchString)).ToListAsync();
+		}
+
+		public async Task<StandardResponse> UploadAvatar(string salt, string path)
+		{
+			Shop shop = await db.Shops.SingleOrDefaultAsync(x => x.ShopUri == salt);
+			string thisDomain = IConfiguration.GetSection("Domain").Value;
+			if (shop != null)
+			{
+				shop.Avatar = thisDomain + path;
+				await db.SaveChangesAsync();
+				return new StandardResponse()
+				{
+					IsSuccess = true,
+					Payload = new { URL = thisDomain + path },
+					Error = null
+				};
+			}
+			else
+			{
+				return new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = new { URL = thisDomain + path },
+					Error = new StandardError()
+					{
+						ErrorCode = 1404,
+						ErrorMessage = ISysErrorRepository.GetName(1404)
+					}
+				};
+			}
 		}
 	}
 }

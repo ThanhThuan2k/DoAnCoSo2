@@ -14,7 +14,7 @@ namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 	[Route("api.v3/[controller]")]
 	public class ShopControllerBase : Controller
 	{
-		private IWebHostEnvironment Host;
+		protected IWebHostEnvironment Host;
 
 		public ShopControllerBase(IWebHostEnvironment _host)
 		{

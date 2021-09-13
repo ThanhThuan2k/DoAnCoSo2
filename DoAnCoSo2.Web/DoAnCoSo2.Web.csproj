@@ -24,6 +24,9 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Shop\Data\" />
+    <Folder Include="wwwroot\Images\Admin\Avatar\" />
+    <Folder Include="wwwroot\Images\Customer\Avatar\" />
+    <Folder Include="wwwroot\Images\Shop\Avatar\" />
   </ItemGroup>
 
 </Project>

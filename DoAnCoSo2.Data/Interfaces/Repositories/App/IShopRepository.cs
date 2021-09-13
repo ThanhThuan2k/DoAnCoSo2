@@ -17,5 +17,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 		Task<StandardResponse> CreateShop(string customerSalt, RegisterShopRequestModel shop);
 		bool IsExistShop(int customerId);
 		Task<List<Shop>> Search(string searchString);
+		Task<StandardResponse> UploadAvatar(string salt, string path);
 	}
 }

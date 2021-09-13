@@ -12,6 +12,8 @@ using DoAnCoSo2.DTOs.App;
 using DoAnCoSo2.Data.Common;
 using DoAnCoSo2.Data.RequestModel.Shop;
 using DoAnCoSo2.Data.Services.CRUDService;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 {
@@ -79,6 +81,32 @@ namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 			string salt = currentCustomer.FindFirst("salt").Value;
 			var createResult = await IShopRepository.CreateShop(salt, shop);
 			return Ok(createResult);
+		}
+
+		[HttpPost("upload")]
+		[Authorize(Roles = "ShopAdmin")]
+		public async Task<IActionResult> UploadImage(IFormFile file)
+		{
+			var root = Host.WebRootPath;
+			var filename = Path.GetFileNameWithoutExtension(file.FileName)
+							+ DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss-fff")
+							+ Path.GetExtension(file.FileName);
+			if (!Directory.Exists(root + "/Images/Shop/Avatar/"))
+			{
+				Directory.CreateDirectory(root + "/Images/Shop/Avatar/");
+			}
+			var relativePath = "/Images/Shop/Avatar/" + filename;
+			var path = root + relativePath;
+			var x = new FileStream(path, FileMode.Create);
+			file.CopyTo(x);
+			x.Dispose();
+			GC.Collect();
+
+			var currentUser = HttpContext.User.Identity as ClaimsIdentity;
+			string salt = currentUser.FindFirst("shopuri").Value;
+
+			var result = await IShopRepository.UploadAvatar(salt, relativePath);
+			return Ok(result);
 		}
 	}
 }

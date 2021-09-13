@@ -12,8 +12,8 @@ namespace DoAnCoSo2.Web.Controllers
 	[Route("api.v2/[controller]")]
 	public class BaseController : Controller
 	{
-		private readonly IWebHostEnvironment Host;
-		private readonly CRUDService service;
+		protected readonly IWebHostEnvironment Host;
+		protected readonly CRUDService service;
 		public BaseController(IWebHostEnvironment _host, CRUDService _service)
 		{
 			Host = _host;
