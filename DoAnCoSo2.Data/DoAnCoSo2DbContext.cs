@@ -34,6 +34,7 @@ namespace DoAnCoSo2.Data
 		public DbSet<Product_Evaluated> Product_Evaluated { get; set; }
 		public DbSet<Customer_Shop_Message> CustomerShopMessage { get; set; }
 		public DbSet<Customer_Admin_Message> CustomerAdminMessage { get; set; }
+		public DbSet<Cart> Carts { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			var builder = new ConfigurationBuilder()
@@ -68,6 +69,7 @@ namespace DoAnCoSo2.Data
 			modelBuilder.ApplyConfiguration(new Customer_Admin_MessageConfiguration());
 
 			modelBuilder.ApplyConfiguration(new Product_Evaluated_Configuration());
+			modelBuilder.ApplyConfiguration(new CartConfiguration());
 		}
 	}
 }

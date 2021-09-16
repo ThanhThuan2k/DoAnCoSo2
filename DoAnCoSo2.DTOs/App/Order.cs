@@ -8,7 +8,6 @@ namespace DoAnCoSo2.DTOs.App
 	{
 		public Order()
 		{
-			Customer = new Customer();
 			OrderDetails = new HashSet<OrderDetail>();
 		}
 		public int Id { get; set; }

@@ -5,10 +5,6 @@ namespace DoAnCoSo2.DTOs.App
 {
 	public class Address
 	{
-		public Address()
-		{
-			Customer = new Customer();
-		}
 		public int Id { get; set; }
 		public int? CustomerID { get; set; }
 		public string FullAddress { get; set; }

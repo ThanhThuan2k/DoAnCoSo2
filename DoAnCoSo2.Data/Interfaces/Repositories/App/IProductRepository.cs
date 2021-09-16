@@ -13,5 +13,11 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 	{
 		Task<StandardResponse> Search(string searchString);
 		Task<List<ProductViewModel>> GetAll(string shopUri);
+		Task<StandardResponse> Details(int id);
+		Task<Shop> GetShop(string shopUri);
+		Task<Brand> GetBrand(int? brandId);
+		Task<Category> GetCategory(int? categoryId);
+		Task<StandardResponse> Create(string shopUri, Product newProduct);
+		Task<StandardResponse> Update(Product update, string avatar, ICollection<Image> images);
 	}
 }

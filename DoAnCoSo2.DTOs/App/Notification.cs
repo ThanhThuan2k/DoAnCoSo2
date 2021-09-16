@@ -5,18 +5,7 @@ using System;
 namespace DoAnCoSo2.DTOs.App
 {
 	public class Notification
-	{
-		public Notification()
-		{
-			FromAdmin = new Admin();
-			ToAdmin = new Admin();
-			FromShop = new Shop();
-			ToShop = new Shop();
-			FromCustomer = new Customer();
-			ToCustomer = new Customer();
-			SysNotification = new SysNotification();
-		}
-
+	{	
 		public int Id { get; set; }
 		public int NotificationID { get; set; }
 		public int? FromCustomerID { get; set; }

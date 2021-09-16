@@ -10,7 +10,6 @@ namespace DoAnCoSo2.DTOs.Auth
 	{
 		public Admin()
 		{
-			Role = new SysRoles();
 			NotificationsSent = new HashSet<Notification>();
 			NotificationsReceived = new HashSet<Notification>();
 		}

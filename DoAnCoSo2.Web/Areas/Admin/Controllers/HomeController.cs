@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,14 +23,16 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		private readonly ISysErrorRepository ISysErrorRepository;
 		private readonly JwtService JwtService;
 		private readonly CRUDService service;
+		private readonly IConfiguration IConfiguration;
 
-		public HomeController(IWebHostEnvironment _host, IAdminRepository adminRepo, JwtService jwtService, ISysErrorRepository errorRepository, CRUDService _service)
+		public HomeController(IWebHostEnvironment _host, IAdminRepository adminRepo, JwtService jwtService, ISysErrorRepository errorRepository, CRUDService _service, IConfiguration _config)
 			: base(_host)
 		{
 			IAdminRepository = adminRepo;
 			JwtService = jwtService;
 			ISysErrorRepository = errorRepository;
 			service = _service;
+			IConfiguration = _config;
 		}
 
 		#region Authentication
@@ -356,14 +359,15 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		public async Task<IActionResult> UploadImage(IFormFile file)
 		{
 			var root = Host.WebRootPath;
+			string imageLocation = IConfiguration.GetSection("ImagesLocation").GetSection("Admin").GetSection("Avatar").Value;
 			var filename = Path.GetFileNameWithoutExtension(file.FileName)
 							+ DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss-fff")
 							+ Path.GetExtension(file.FileName);
-			if (!Directory.Exists(root + "/Images/Admin/Avatar/"))
+			if (!Directory.Exists(root + imageLocation))
 			{
-				Directory.CreateDirectory(root + "/Images/Admin/Avatar/");
+				Directory.CreateDirectory(root + imageLocation);
 			}
-			var relativePath = "/Images/Admin/Avatar/" + filename;
+			var relativePath = imageLocation + filename;
 			var path = root + relativePath;
 			var x = new FileStream(path, FileMode.Create);
 			file.CopyTo(x);

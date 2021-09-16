@@ -25,7 +25,11 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="wwwroot\Images\Admin\Avatar\" />
+    <Folder Include="wwwroot\Images\Brand\Avatar\" />
+    <Folder Include="wwwroot\Images\Category\Avatar\" />
     <Folder Include="wwwroot\Images\Customer\Avatar\" />
+    <Folder Include="wwwroot\Images\Products\Avatar\" />
+    <Folder Include="wwwroot\Images\Products\Describe\" />
     <Folder Include="wwwroot\Images\Shop\Avatar\" />
   </ItemGroup>
 

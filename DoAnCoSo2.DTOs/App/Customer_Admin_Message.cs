@@ -10,11 +10,6 @@ namespace DoAnCoSo2.Data.Configuration.App
 {
 	public class Customer_Admin_Message
 	{
-		public Customer_Admin_Message()
-		{
-			Customer = new Customer();
-			Admin = new Admin();
-		}
 		public int Id { get; set; }
 		public string MessageContent { get; set; }
 		public DateTime SendTime { get; set; }

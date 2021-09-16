@@ -25,5 +25,12 @@ namespace DoAnCoSo2.Web.Controllers
 		{
 			return Ok(await IProductRepository.Search(searchString));
 		}
+
+		[HttpGet("details/{id}")]
+		[AllowAnonymous]
+		public async Task<IActionResult> Details(int id)
+		{
+			return Ok(await IProductRepository.Details(id));
+		}
 	}
 }

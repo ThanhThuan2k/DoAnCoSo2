@@ -14,6 +14,7 @@ using DoAnCoSo2.Data.RequestModel.Shop;
 using DoAnCoSo2.Data.Services.CRUDService;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 {
@@ -21,11 +22,13 @@ namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 	{
 		private IShopRepository IShopRepository;
 		private CRUDService Service;
-		public HomeController(IWebHostEnvironment _host, IShopRepository _shopRepo, CRUDService service)
+		private readonly IConfiguration IConfiguration;
+		public HomeController(IWebHostEnvironment _host, IShopRepository _shopRepo, CRUDService service, IConfiguration _config)
 		: base(_host)
 		{
 			IShopRepository = _shopRepo;
 			Service = service;
+			IConfiguration = _config;
 		}
 
 		[HttpGet("get")]
@@ -88,14 +91,15 @@ namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 		public async Task<IActionResult> UploadImage(IFormFile file)
 		{
 			var root = Host.WebRootPath;
+			string imageLocation = IConfiguration.GetSection("ImagesLocation").GetSection("Shop").GetSection("Avatar").Value;
 			var filename = Path.GetFileNameWithoutExtension(file.FileName)
 							+ DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss-fff")
 							+ Path.GetExtension(file.FileName);
-			if (!Directory.Exists(root + "/Images/Shop/Avatar/"))
+			if (!Directory.Exists(root + imageLocation))
 			{
-				Directory.CreateDirectory(root + "/Images/Shop/Avatar/");
+				Directory.CreateDirectory(root + imageLocation);
 			}
-			var relativePath = "/Images/Shop/Avatar/" + filename;
+			var relativePath = imageLocation + filename;
 			var path = root + relativePath;
 			var x = new FileStream(path, FileMode.Create);
 			file.CopyTo(x);

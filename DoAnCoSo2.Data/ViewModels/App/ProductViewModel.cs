@@ -10,11 +10,12 @@ namespace DoAnCoSo2.Data.ViewModels.App
 	{	
 		public int Id { get; set; }
 		public string ProductName { get; set; }
-		public float? Price { get; set; }
-		public float? MinimumPrice { get; set; }
-		public float? MaximumPrice { get; set; }
+		public float Price { get; set; }
+		public float MinimumPrice { get; set; }
+		public float MaximumPrice { get; set; }
 		public int? TotalEvaluated { get; set; }
 		public int Like { get; set; }
+		public string Avatar { get; set; }
 		public int? TotalSold { get; set; }
 		public int QuantityOfInventory { get; set; }
 		public string Material { get; set; }
@@ -23,5 +24,6 @@ namespace DoAnCoSo2.Data.ViewModels.App
 		public BrandViewModel Brand { get; set; }
 		public CategoryViewModel Category { get; set; }
 		public ICollection<ImageViewModel> Images { get; set; }
+		public ICollection<CommentViewModel> Comments { get; set; }
 	}
 }
