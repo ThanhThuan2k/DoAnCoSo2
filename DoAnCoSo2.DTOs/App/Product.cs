@@ -9,13 +9,11 @@ namespace DoAnCoSo2.DTOs.App
 	{
 		public Product()
 		{
-			Shop = new Shop();
-			Category = new Category();
-			Brand = new Brand();
 			Images = new HashSet<Image>();
 			Evaluated = new HashSet<Product_Evaluated>();
 			Comments = new HashSet<Comment>();
 			OrderDetails = new HashSet<OrderDetail>();
+			Carts = new HashSet<Cart>();
 		}
 		public int Id { get; set; }
 		public string ProductName { get; set; }
@@ -25,6 +23,7 @@ namespace DoAnCoSo2.DTOs.App
 		public float? MinimumPrice { get; set; }
 		public float? MaximumPrice { get; set; }
 		public int? TotalEvaluated { get; set; }
+		public string Avatar { get; set; }
 		public int Like { get; set; }
 		public int? TotalSold { get; set; }
 		public int QuantityOfInventory { get; set; }
@@ -42,5 +41,6 @@ namespace DoAnCoSo2.DTOs.App
 		public ICollection<Product_Evaluated> Evaluated { get; set; }
 		public ICollection<Comment> Comments { get; set; }
 		public ICollection<OrderDetail> OrderDetails { get; set; }
+		public ICollection<Cart> Carts { get; set; }
 	}
 }

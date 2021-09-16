@@ -74,6 +74,9 @@ namespace DoAnCoSo2.Web
 			services.AddScoped<ICustomerRepository, CustomerRepository>();
 			services.AddScoped<IProductRepository, ProductRepository>();
 			services.AddScoped<IShopRepository, ShopRepository>();
+			services.AddScoped<ICategoryRepository, CategoryRepository>();
+			services.AddScoped<IBrandRepository, BrandRepository>();
+			services.AddScoped<IOrderRepository, OrderRepository>();
 
 			services.AddControllersWithViews().AddNewtonsoftJson(
 				option =>

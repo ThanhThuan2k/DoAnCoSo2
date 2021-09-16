@@ -11,7 +11,6 @@ namespace DoAnCoSo2.DTOs.App
 	{
 		public Comment()
 		{
-			RootComment = new Comment();
 			ReplyComments = new HashSet<Comment>();
 			Images = new HashSet<Image>();
 		}

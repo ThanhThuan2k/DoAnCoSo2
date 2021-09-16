@@ -9,7 +9,6 @@ namespace DoAnCoSo2.DTOs.App
 	{
 		public Shop()
 		{
-			Customer = new Customer();
 			NotificationsSent = new HashSet<Notification>();
 			NotificationsReceived = new HashSet<Notification>();
 			Products = new HashSet<Product>();

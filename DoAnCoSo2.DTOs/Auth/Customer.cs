@@ -15,6 +15,7 @@ namespace DoAnCoSo2.DTOs.Auth
 			Orders = new HashSet<Order>();
 			Messages_Shop = new HashSet<Customer_Shop_Message>();
 			Messages_Admin = new HashSet<Customer_Admin_Message>();
+			Carts = new HashSet<Cart>();
 		}
 
 		public int Id { get; set; }
@@ -38,5 +39,6 @@ namespace DoAnCoSo2.DTOs.Auth
 		public ICollection<Order> Orders { get; set; }
 		public ICollection<Customer_Shop_Message> Messages_Shop { get; set; }
 		public ICollection<Customer_Admin_Message> Messages_Admin { get; set; }
+		public ICollection<Cart> Carts { get; set; }
 	}
 }

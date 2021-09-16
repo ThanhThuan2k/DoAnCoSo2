@@ -72,8 +72,10 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Avatar")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasDefaultValueSql("NULL");
 
                     b.Property<DateTime>("CreateAt")
                         .ValueGeneratedOnAdd()
@@ -94,6 +96,52 @@ namespace DoAnCoSo2.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brand");
+                });
+
+            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Classification")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("NULL");
+
+                    b.Property<string>("Color")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("NULL");
+
+                    b.Property<DateTime?>("CreateAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category", b =>
@@ -203,7 +251,7 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CommentID")
+                    b.Property<int?>("CommentID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
@@ -214,7 +262,7 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductID")
+                    b.Property<int?>("ProductID")
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
@@ -346,8 +394,11 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Property<int?>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ColorID")
-                        .HasColumnType("int");
+                    b.Property<string>("Classification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateAt")
                         .ValueGeneratedOnAdd()
@@ -393,6 +444,9 @@ namespace DoAnCoSo2.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("BrandID")
                         .HasColumnType("int");
@@ -970,6 +1024,25 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Cart", b =>
+                {
+                    b.HasOne("DoAnCoSo2.DTOs.Auth.Customer", "Customer")
+                        .WithMany("Carts")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DoAnCoSo2.DTOs.App.Product", "Product")
+                        .WithMany("Carts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Comment", b =>
                 {
                     b.HasOne("DoAnCoSo2.DTOs.Sys.SysEvaluated", "Evaluated")
@@ -997,15 +1070,11 @@ namespace DoAnCoSo2.Data.Migrations
                 {
                     b.HasOne("DoAnCoSo2.DTOs.App.Comment", "Comment")
                         .WithMany("Images")
-                        .HasForeignKey("CommentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CommentID");
 
                     b.HasOne("DoAnCoSo2.DTOs.App.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductID");
 
                     b.Navigation("Comment");
 
@@ -1225,6 +1294,8 @@ namespace DoAnCoSo2.Data.Migrations
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Product", b =>
                 {
+                    b.Navigation("Carts");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Evaluated");
@@ -1259,6 +1330,8 @@ namespace DoAnCoSo2.Data.Migrations
             modelBuilder.Entity("DoAnCoSo2.DTOs.Auth.Customer", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Carts");
 
                     b.Navigation("Messages_Admin");
 

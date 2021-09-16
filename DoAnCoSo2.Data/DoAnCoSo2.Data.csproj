@@ -20,4 +20,8 @@
     <ProjectReference Include="..\DoAnCoSo2.DTOs\DoAnCoSo2.DTOs.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RequestModel\Product\" />
+  </ItemGroup>
+
 </Project>

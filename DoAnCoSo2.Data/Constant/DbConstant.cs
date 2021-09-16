@@ -114,5 +114,10 @@
 
 		// Customer_Admin_Message table
 		public const string CUSTOMER_ADMIN_TABLE_NAME = "CustomerAdminMessage";
+
+		// Cart table
+		public const string CART_TABLE_NAME = "Cart";
+		public const ushort CART_COLOR_MAX_LENGTH = 50;
+		public const ushort CART_CLASSIFICATION_MAX_LENGTH = 1000;
 	}
 }

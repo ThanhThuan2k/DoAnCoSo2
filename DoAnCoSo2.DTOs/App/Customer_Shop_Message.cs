@@ -10,11 +10,6 @@ namespace DoAnCoSo2.Data.Configuration.App
 {
 	public class Customer_Shop_Message
 	{
-		public Customer_Shop_Message()
-		{
-			Customer = new Customer();
-			Shop = new Shop();
-		}
 		public int Id { get; set; }
 		public string MessageContent { get; set; }
 		public DateTime SendTime { get; set; }
