@@ -14,5 +14,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 		Task<StandardResponse> Create(Brand newBrand);
 		Task<StandardResponse> Update(Brand update);
 		bool IsExist(int id);
+		Brand Get(int id);
 	}
 }

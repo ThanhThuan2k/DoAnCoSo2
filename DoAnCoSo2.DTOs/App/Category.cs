@@ -18,5 +18,6 @@ namespace DoAnCoSo2.DTOs.App
 		public DateTime? DeleteAt { get; set; }
 		
 		public ICollection<Product> Products { get; set; }
+		public ICollection<Brand> Brands { get; set; }
 	}
 }

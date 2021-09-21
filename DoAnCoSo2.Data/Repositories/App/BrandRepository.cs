@@ -60,7 +60,19 @@ namespace DoAnCoSo2.Data.Repositories.App
 			{
 				IsSuccess = true,
 				Error = null,
-				Payload = await db.Brands.Where(x => x.DeleteAt == null).ToListAsync()
+				Payload = await db.Brands
+				.Where(x => x.DeleteAt == null)
+				.Include(x => x.Products)
+				.Select(x => new
+				{
+					id = x.Id,
+					avatar = x.Avatar,
+					name = x.Name,
+					createAt = x.CreateAt,
+					tongSanPham = x.Products.Count
+				})
+				.OrderByDescending(x => x.tongSanPham)
+				.ToListAsync()
 			};
 		}
 
@@ -70,7 +82,18 @@ namespace DoAnCoSo2.Data.Repositories.App
 			{
 				try
 				{
-					await Service.UpdateAsync<Brand, Brand>(update);
+					Brand thisBrand = Get(update.Id);
+					if(!String.IsNullOrEmpty(update.Name))
+					{
+						thisBrand.Name = update.Name;
+					}
+
+					if(!String.IsNullOrEmpty(update.Avatar))
+					{
+						thisBrand.Avatar = update.Avatar;
+					}
+
+					await db.SaveChangesAsync();
 					return new StandardResponse()
 					{
 						IsSuccess = true,
@@ -105,6 +128,11 @@ namespace DoAnCoSo2.Data.Repositories.App
 					}
 				};
 			}
+		}
+
+		public Brand Get(int id)
+		{
+			return db.Brands.SingleOrDefault(x => x.Id == id);
 		}
 
 		public bool IsExist(int id)
