@@ -20,5 +20,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 		Task<StandardResponse> Create(Order newOrder);
 		Task<Product> GetProduct(int productId);
 		Task<StandardResponse> GetCart(string customerSalt);
+		Task<StandardResponse> GetAll();
 	}
 }

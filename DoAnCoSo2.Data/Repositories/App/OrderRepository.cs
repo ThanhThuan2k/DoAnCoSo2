@@ -144,5 +144,31 @@ namespace DoAnCoSo2.Data.Repositories.App
 				Error = null
 			};
 		}
+
+		public async Task<StandardResponse> GetAll()
+		{
+			return new StandardResponse()
+			{
+				IsSuccess = true,
+				Error = null,
+				Payload = await db.Order.AsNoTracking()
+					.Include(x => x.Customer)
+					.Include(x => x.OrderDetails)
+					.Where(x => x.DeleteAt == null)
+					.Select(x => new
+					{
+						Id = x.Id,
+						OrderTime = x.OrderTime,
+						UpdateAt = x.UpdateAt,
+						Total = x.Total,
+						Customer = new
+						{
+							Id = x.CustomerID,
+							Name = x.Customer.FullName
+						}
+					})
+					.ToListAsync()
+			};
+		}
 	}
 }

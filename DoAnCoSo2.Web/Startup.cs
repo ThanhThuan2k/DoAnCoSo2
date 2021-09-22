@@ -1,4 +1,4 @@
-using DoAnCoSo2.Data;
+﻿using DoAnCoSo2.Data;
 using DoAnCoSo2.Data.Common;
 using DoAnCoSo2.Data.Constant;
 using DoAnCoSo2.Data.Interfaces.Repositories;
@@ -11,11 +11,13 @@ using DoAnCoSo2.Data.Services.CRUDService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Text;
@@ -42,7 +44,8 @@ namespace DoAnCoSo2.Web
 			});
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddJwtBearer(opt => {
+				.AddJwtBearer(opt =>
+				{
 					opt.TokenValidationParameters = new TokenValidationParameters
 					{
 						ValidateIssuer = true,
@@ -97,6 +100,132 @@ namespace DoAnCoSo2.Web
 				app.UseHttpsRedirection();
 				app.UseCors(option => option.AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 			}
+			app.Use(async (context, next) =>
+			{
+				await next();
+				if (context.Response.StatusCode == 404)
+				{
+					var error = new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = null,
+						Error = new StandardError()
+						{
+							ErrorCode = 404,
+							ErrorMessage = "Không tồn tại dữ liệu này"
+						}
+					};
+					var json = JsonConvert.SerializeObject(error);
+					var bytes = Encoding.UTF8.GetBytes(json);
+					context.Response.Headers.Add("Content-Type", "application/json");
+					await context.Response.Body.WriteAsync(bytes);
+				}
+				if (context.Response.StatusCode == 401)
+				{
+					var error = new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = null,
+						Error = new StandardError()
+						{
+							ErrorCode = 401,
+							ErrorMessage = "Bạn chưa đăng nhập vào hệ thống"
+						}
+					};
+					var json = JsonConvert.SerializeObject(error);
+					var bytes = Encoding.UTF8.GetBytes(json);
+					context.Response.Headers.Add("Content-Type", "application/json");
+					await context.Response.Body.WriteAsync(bytes);
+				}
+				if(context.Response.StatusCode == 403)
+				{
+					var error = new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = null,
+						Error = new StandardError()
+						{
+							ErrorCode = 403,
+							ErrorMessage = "Bạn không có quyền truy cập"
+						}
+					};
+					var json = JsonConvert.SerializeObject(error);
+					var bytes = Encoding.UTF8.GetBytes(json);
+					context.Response.Headers.Add("Content-Type", "application/json");
+					await context.Response.Body.WriteAsync(bytes);
+				}
+				if(context.Response.StatusCode == 400)
+				{
+					var error = new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = null,
+						Error = new StandardError()
+						{
+							ErrorCode = 400,
+							ErrorMessage = "Yêu cầu không hợp lệ, vui lòng kiểm tra dữ liệu"
+						}
+					};
+					var json = JsonConvert.SerializeObject(error);
+					var bytes = Encoding.UTF8.GetBytes(json);
+					context.Response.Headers.Add("Content-Type", "application/json");
+					await context.Response.Body.WriteAsync(bytes);
+				}
+				
+				if(context.Response.StatusCode == 405)
+				{
+					var error = new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = null,
+						Error = new StandardError()
+						{
+							ErrorCode = 405,
+							ErrorMessage = "Vui lòng kiểm tra phương thức yêu cầu"
+						}
+					};
+					var json = JsonConvert.SerializeObject(error);
+					var bytes = Encoding.UTF8.GetBytes(json);
+					context.Response.Headers.Add("Content-Type", "application/json");
+					await context.Response.Body.WriteAsync(bytes);
+				}
+
+				if(context.Response.StatusCode == 409)
+				{
+					var error = new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = null,
+						Error = new StandardError()
+						{
+							ErrorCode = 409,
+							ErrorMessage = "Server đang quá tải, vui lòng quay lại trong giây lát"
+						}
+					};
+					var json = JsonConvert.SerializeObject(error);
+					var bytes = Encoding.UTF8.GetBytes(json);
+					context.Response.Headers.Add("Content-Type", "application/json");
+					await context.Response.Body.WriteAsync(bytes);
+				}
+
+				if(context.Response.StatusCode == 412)
+				{
+					var error = new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = null,
+						Error = new StandardError()
+						{
+							ErrorCode = 412,
+							ErrorMessage = "Server từ chối yêu cầu này"
+						}
+					};
+					var json = JsonConvert.SerializeObject(error);
+					var bytes = Encoding.UTF8.GetBytes(json);
+					context.Response.Headers.Add("Content-Type", "application/json");
+					await context.Response.Body.WriteAsync(bytes);
+				}
+			});
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
@@ -104,7 +233,7 @@ namespace DoAnCoSo2.Web
 
 			app.UseAuthentication();
 			app.UseAuthorization();
-			
+
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();

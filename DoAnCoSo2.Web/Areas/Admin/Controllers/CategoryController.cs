@@ -47,7 +47,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 				category.Avatar.CopyTo(x);
 				x.Dispose();
 				GC.Collect();
-				savePath = IConfiguration.GetSection("Domain").Value + imageLocation;
+				savePath = IConfiguration.GetSection("Domain").Value + relativePath;
 			}
 			var newCategory = new Category()
 			{
@@ -79,12 +79,13 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 				var path = root + relativePath;
 				var x = new FileStream(path, FileMode.Create);
 				update.Avatar.CopyTo(x);
-				ava = IConfiguration.GetSection("Domain").Value + imageLocation;
+				ava = IConfiguration.GetSection("Domain").Value + relativePath;
 				x.Dispose();
 				GC.Collect();
 			}
 			var updateCategory = new Category()
 			{
+				Id = update.Id,
 				Name = update.Name,
 				Avatar = ava,
 				UpdateAt = DateTime.Now

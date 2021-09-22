@@ -31,8 +31,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 		[Authorize(Roles = "Admin, SysAdmin, SecurityAdmin, CreatorAdmin")]
 		public async Task<IActionResult> GetAll()
 		{
-			StandardResponse response = await ICustomerRepository.GetAll();
-			return Ok(response);
+			return Ok(await ICustomerRepository.GetAll());
 		}
 
 		[HttpGet("get/{id}")]

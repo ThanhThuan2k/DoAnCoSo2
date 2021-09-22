@@ -13,5 +13,10 @@ namespace DoAnCoSo2.Data.ViewModels.App
 		public string Address { get; set; }
 		public string Avatar { get; set; }
 		public string ShopUri { get; set; }
+		public string Name { get; set; }
+		public int? Follower { get; set; }
+		public string Description { get; set; }
+		public DateTime? LastOnline { get; set; }
+		public string Nickname { get; set; }
 	}
 }

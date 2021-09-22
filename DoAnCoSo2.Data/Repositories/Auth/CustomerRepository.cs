@@ -52,7 +52,12 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 						CreateDate = x.Shop.CreateDate,
 						Address = x.Shop.Address,
 						Avatar = x.Shop.Avatar,
-						ShopUri = x.Shop.ShopUri
+						ShopUri = x.Shop.ShopUri,
+						Name = x.Shop.Name,
+						Follower = x.Shop.Follower,
+						Description = x.Shop.Description,
+						LastOnline = x.Shop.LastOnline,
+						Nickname = x.Shop.Nickname
 					},
 					Addresses = x.Addresses.Select(x => new AddressViewModel()
 					{

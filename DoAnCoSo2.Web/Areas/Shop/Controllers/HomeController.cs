@@ -76,15 +76,6 @@ namespace DoAnCoSo2.Web.Areas.Shop.Controllers
 			});
 		}
 
-		[HttpPost("register")]
-		[Authorize(Roles = "Customer")]
-		public async Task<IActionResult> Register(RegisterShopRequestModel shop)
-		{
-			var currentCustomer = HttpContext.User.Identity as ClaimsIdentity;
-			string salt = currentCustomer.FindFirst("salt").Value;
-			var createResult = await IShopRepository.CreateShop(salt, shop);
-			return Ok(createResult);
-		}
 
 		[HttpPost("upload")]
 		[Authorize(Roles = "ShopAdmin")]

@@ -14,6 +14,7 @@ namespace DoAnCoSo2.Data.Configuration.App
 			builder.Property(model => model.Quantity).HasDefaultValue(1);
 			builder.Property(model => model.Paid).HasDefaultValue(false);
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
+			builder.Property(model => model.Total).HasDefaultValue(0);
 
 			builder.HasOne(model => model.Status).WithMany(status => status.OrderDetails)
 				.HasForeignKey(model => model.StatusID);

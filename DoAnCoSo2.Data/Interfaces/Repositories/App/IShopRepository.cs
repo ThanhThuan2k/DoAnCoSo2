@@ -14,9 +14,12 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 	{
 		Task<Customer> GetCustomer(string salt);
 		Task<Shop> GetShopByUri(string uri);
-		Task<StandardResponse> CreateShop(string customerSalt, RegisterShopRequestModel shop);
+		Task<StandardResponse> CreateShop(Shop newShop);
 		bool IsExistShop(int customerId);
 		Task<List<Shop>> Search(string searchString);
 		Task<StandardResponse> UploadAvatar(string salt, string path);
+		Task<string> GetAddress(string customerSalt);
+		Task<Customer> GetCustomerWithTracking(string customerSalt);
+		Task<StandardResponse> GetAll();
 	}
 }

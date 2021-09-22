@@ -41,84 +41,31 @@ namespace DoAnCoSo2.Data.Repositories.App
 			return db.Shops.Any(x => x.OwnerID == customerId);
 		}
 
-		public async Task<StandardResponse> CreateShop(string customerSalt, RegisterShopRequestModel shop)
+		public async Task<StandardResponse> CreateShop(Shop newShop)
 		{
-			Customer thisCustomer = await db.Customers.SingleOrDefaultAsync(x => x.Salt == customerSalt);
-			if (IsExistShop(thisCustomer.Id))
+			try
 			{
-				return new StandardResponse()
-				{
-					IsSuccess = true,
-					Payload = db.Shops.Single(x => x.OwnerID == thisCustomer.Id),
-					Error = new StandardError()
-					{
-						ErrorCode = 1939,
-						ErrorMessage = ISysErrorRepository.GetName(1939)
-					}
-				};
-			}
-			else
-			{
-				thisCustomer.Shop = new Shop()
-				{
-					OwnerID = thisCustomer.Id,
-					CreateAt = DateTime.Now,
-					CreateDate = DateTime.Now,
-					ShopUri = PasswordHelper.RandomNumber(10, 11),
-					Address = thisCustomer.Addresses.Where(x => x.IsDefault == true).Select(x => x.FullAddress).FirstOrDefault(),
-					Name = shop.Name,
-					Description = shop.Description,
-					Nickname = shop.Nickname
-				};
+				await db.Shops.AddAsync(newShop);
 				await db.SaveChangesAsync();
-
-				string hiddenPhone = thisCustomer.PhoneNumber.Substring(0, 4);
-				for(int i = 0; i < thisCustomer.PhoneNumber.Length - 4; i++)
-				{
-					hiddenPhone += "*";
-				}
-
-				string hiddenEmail = thisCustomer.Email;
-				string before = hiddenEmail.Split('@').First();
-				string last = hiddenEmail.Split('@').Last();
-				string star = "";
-				for(int i = 0; i < before.Length; i++)
-				{
-					star += "*";
-				}
-				hiddenEmail = String.Join('@', star, last);
 
 				return new StandardResponse()
 				{
 					IsSuccess = true,
 					Error = null,
-					Payload = await db.Customers.AsNoTracking().Include(x => x.Shop)
-						.Where(x => x.Salt == customerSalt)
-						.Select(x => new
-						{
-							Id = x.Id,
-							Email = hiddenEmail,
-							Fullname = x.FullName,
-							Sex = x.Sex,
-							PhoneNumber = hiddenPhone,
-							Username = x.Username,
-							DateOfBirth = x.DateOfBirth,
-							Avatar = x.Avatar,
-							CreateDate = x.CreateAt,
-							Shop = new
-							{
-								Id = x.Shop.Id,
-								CreateDate = x.Shop.CreateDate,
-								ShopName = x.Shop.Name,
-								Nickname = x.Shop.Nickname,
-								Follower = x.Shop.Follower,
-								Description = x.Shop.Description,
-								Address = x.Shop.Address,
-								Avatar = x.Shop.Avatar,
-								ShopUri = x.Shop.ShopUri
-							}
-						})
-						.SingleOrDefaultAsync()
+					Payload = newShop
+				};
+			}
+			catch(Exception ex)
+			{
+				return new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = null,
+					Error = new StandardError()
+					{
+						ErrorCode = 0,
+						ErrorMessage = ex.Message
+					}
 				};
 			}
 		}
@@ -156,6 +103,34 @@ namespace DoAnCoSo2.Data.Repositories.App
 					}
 				};
 			}
+		}
+		public async Task<string> GetAddress(string customerSalt)
+		{
+			return await db.Customers.AsNoTracking()
+				.Where(x => x.Salt == customerSalt && x.DeleteAt == null)
+				.Include(x => x.Addresses)
+				.Select(x => x.Addresses
+					.Where(x => x.IsDefault == true && x.DeleteAt == null)
+					.Select(x => x.FullAddress)
+					.FirstOrDefault())
+				.FirstOrDefaultAsync();
+		}
+		public async Task<Customer> GetCustomerWithTracking(string customerSalt)
+		{
+			return await db.Customers.SingleOrDefaultAsync(x => x.Salt == customerSalt && x.DeleteAt == null);
+		}
+		public async Task<StandardResponse> GetAll()
+		{
+			return new StandardResponse()
+			{
+				IsSuccess = true,
+				Payload = await db.Shops.AsNoTracking()
+				.Where(x => x.DeleteAt == null)
+				.Include(x => x.Customer)
+				.Include(x => x.Products)
+				.ToListAsync(),
+				Error = null
+			};
 		}
 	}
 }

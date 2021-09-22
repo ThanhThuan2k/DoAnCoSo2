@@ -378,6 +378,11 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<float>("Total")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
+
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
@@ -428,6 +433,11 @@ namespace DoAnCoSo2.Data.Migrations
 
                     b.Property<int?>("StatusID")
                         .HasColumnType("int");
+
+                    b.Property<float>("Total")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
