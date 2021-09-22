@@ -53,7 +53,16 @@ namespace DoAnCoSo2.Data.Repositories.App
 		{
 			try
 			{
-				await Service.UpdateAsync<Category, Category>(update);
+				var thisCategory = Get(update.Id);
+				if (!String.IsNullOrEmpty(update.Avatar))
+				{
+					thisCategory.Avatar = update.Avatar;
+				}
+				if (!String.IsNullOrEmpty(update.Name))
+				{
+					thisCategory.Name = update.Name;
+				}
+				await db.SaveChangesAsync();
 				return new StandardResponse()
 				{
 					IsSuccess = true,
@@ -82,9 +91,24 @@ namespace DoAnCoSo2.Data.Repositories.App
 			return new StandardResponse()
 			{
 				IsSuccess = true,
-				Payload = await db.Categories.Where(x => x.DeleteAt == null).ToListAsync(),
+				Payload = await db.Categories
+				.Where(x => x.DeleteAt == null)
+				.Select(x => new
+				{
+					id = x.Id,
+					name = x.Name,
+					avatar = x.Avatar,
+					createAt = x.CreateAt,
+					tongSanPham = x.Products.Count
+				})
+				.ToListAsync(),
 				Error = null
 			};
+		}
+
+		public Category Get(int id)
+		{
+			return db.Categories.SingleOrDefault(x => x.Id == id && x.DeleteAt == null);
 		}
 	}
 }

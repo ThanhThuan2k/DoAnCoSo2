@@ -19,6 +19,7 @@ namespace DoAnCoSo2.Data.Configuration.App
 			builder.Property(model => model.OrderTime).HasDefaultValueSql("GETDATE()");
 			builder.HasOne(model => model.Customer).WithMany(cus => cus.Orders)
 				.HasForeignKey(model => model.CustomerID);
+			builder.Property(model => model.Total).HasDefaultValue(0);
 		}
 	}
 }

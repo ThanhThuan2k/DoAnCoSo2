@@ -9,6 +9,7 @@ namespace DoAnCoSo2.DTOs.App
 		public int? ShopID { get; set; }
 		public int? ProductID { get; set; }
 		public int Quantity { get; set; }
+		public float Total { get; set; }
 		public string Color { get; set; }
 		public int? StatusID { get; set; }
 		public string Classification { get; set; }

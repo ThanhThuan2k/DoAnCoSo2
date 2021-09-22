@@ -77,6 +77,9 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("nvarchar(1000)")
                         .HasDefaultValueSql("NULL");
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -94,6 +97,8 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Brand");
                 });
@@ -373,6 +378,11 @@ namespace DoAnCoSo2.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<float>("Total")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
+
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
@@ -423,6 +433,11 @@ namespace DoAnCoSo2.Data.Migrations
 
                     b.Property<int?>("StatusID")
                         .HasColumnType("int");
+
+                    b.Property<float>("Total")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -1024,6 +1039,15 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Brand", b =>
+                {
+                    b.HasOne("DoAnCoSo2.DTOs.App.Category", "Category")
+                        .WithMany("Brands")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Cart", b =>
                 {
                     b.HasOne("DoAnCoSo2.DTOs.Auth.Customer", "Customer")
@@ -1277,6 +1301,8 @@ namespace DoAnCoSo2.Data.Migrations
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category", b =>
                 {
+                    b.Navigation("Brands");
+
                     b.Navigation("Products");
                 });
 

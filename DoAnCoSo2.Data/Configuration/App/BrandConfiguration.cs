@@ -21,6 +21,8 @@ namespace DoAnCoSo2.Data.Configuration.App
 			builder.Property(model => model.Avatar).HasMaxLength(DbConstant.BRAND_AVATAR_MAX_LENGTH);
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
 			builder.Property(model => model.Avatar).HasDefaultValueSql("NULL");
+			builder.HasOne(model => model.Category).WithMany(model => model.Brands)
+				.HasForeignKey(model => model.CategoryId);
 		}
 	}
 }

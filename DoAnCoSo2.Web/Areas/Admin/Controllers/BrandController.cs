@@ -86,12 +86,13 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 				var path = root + relativePath;
 				var x = new FileStream(path, FileMode.Create);
 				update.Avatar.CopyTo(x);
-				ava = IConfiguration.GetSection("Domain").Value + imageLocation;
+				ava = IConfiguration.GetSection("Domain").Value + relativePath;
 				x.Dispose();
 				GC.Collect();
 			}
 			var updateBrand = new Brand()
 			{
+				Id = update.Id,
 				Name = update.Name,
 				Avatar = ava,
 				UpdateAt = DateTime.Now

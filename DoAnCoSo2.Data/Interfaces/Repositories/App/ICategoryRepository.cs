@@ -13,5 +13,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 		Task<StandardResponse> Create(Category category);
 		Task<StandardResponse> Update(Category update);
 		Task<StandardResponse> GetAll();
+		Category Get(int id);
 	}
 }
