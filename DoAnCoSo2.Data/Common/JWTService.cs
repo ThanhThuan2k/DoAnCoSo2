@@ -41,6 +41,8 @@ namespace DoAnCoSo2.Data.Common
 				new Claim(JwtRegisteredClaimNames.Sub, admin.Username),
 				new Claim(JwtRegisteredClaimNames.Email, admin.Email),
 				new Claim("salt", admin.Salt),
+				new Claim("fullname", admin.FullName),
+				new Claim("avatar", admin.Avatar),
 				new Claim(ClaimTypes.Role, admin.Role.Role)
 			};
 
@@ -77,7 +79,6 @@ namespace DoAnCoSo2.Data.Common
 				);
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
-
 
 		public static string General(Customer customer, string newRole)
 		{

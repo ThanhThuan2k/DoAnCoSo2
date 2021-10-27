@@ -119,5 +119,11 @@
 		public const string CART_TABLE_NAME = "Cart";
 		public const ushort CART_COLOR_MAX_LENGTH = 50;
 		public const ushort CART_CLASSIFICATION_MAX_LENGTH = 1000;
+
+		// Category2 table
+		public const string CATEGORY2_TABLE_NAME = "CATEGORY2";
+
+		// Category3 table
+		public const string CATEGORY3_TABLE_NAME = "CATEGORY3";
 	}
 }

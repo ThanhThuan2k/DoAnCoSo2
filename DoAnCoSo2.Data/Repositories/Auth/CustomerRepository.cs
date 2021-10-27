@@ -468,5 +468,160 @@ namespace DoAnCoSo2.Data.Repositories.Auth
 				};
 			}
 		}
+
+		public async Task<StandardResponse> EmailAuthentication(string email)
+		{
+			if (email != null)
+			{
+				bool isExistEmail = await IsExistEmailAsync(email);
+				if (isExistEmail)
+				{
+					Customer customer = await db.Customers
+						.AsNoTracking()
+						.Include(x => x.Shop)
+						.Where(x => x.Email == email && x.DeleteAt == null)
+						.SingleOrDefaultAsync();
+					string token = JwtService.General(customer, "ShopAdmin");
+					return new StandardResponse()
+					{
+						IsSuccess = true,
+						Payload = new
+						{
+							token = token,
+							email = customer.Email,
+							fullName = customer.FullName,
+							phoneNumber = customer.PhoneNumber,
+							username = customer.Username,
+							avatar = customer.Avatar,
+							shopName = customer.Shop.Name,
+							shopAvatar = customer.Shop.Avatar
+						},
+						Error = null
+					};
+				}
+				else
+				{
+					return new StandardResponse()
+					{
+						IsSuccess = false,
+						Payload = email,
+						Error = new StandardError()
+						{
+							ErrorCode = 1404,
+							ErrorMessage = Error.GetName(1404)
+						}
+					};
+				}
+			}
+			else
+			{
+				return new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = null,
+					Error = new StandardError()
+					{
+						ErrorCode = 1287,
+						ErrorMessage = Error.GetName(1287)
+					}
+				};
+			}
+		}
+
+		public async Task<bool> IsExistEmailAsync(string email)
+		{
+			return await db.Customers.AnyAsync(x => x.Email == email && x.DeleteAt == null);
+		}
+
+		public async Task<StandardResponse> Login(SellerLoginViewModel model)
+		{
+			if (!String.IsNullOrEmpty(model.Email))
+			{
+				Customer customer = await db.Customers
+					.AsNoTracking()
+					.Include(x => x.Shop)
+					.SingleOrDefaultAsync(x => x.Email == model.Email && x.DeleteAt == null);
+				if (customer != null)
+				{
+					bool isRightPassword = BCrypt.Net.BCrypt.Verify(model.Password, customer.Password);
+					if (isRightPassword)
+					{
+						if (customer.Shop == null)
+						{
+							return new StandardResponse()
+							{
+								IsSuccess = false,
+								Payload = model,
+								Error = new StandardError()
+								{
+									ErrorCode = 1221,
+									ErrorMessage = Error.GetName(1221)
+								}
+							};
+						}
+						else
+						{
+							string token = JwtService.General(customer, "ShopAdmin");
+							return new StandardResponse()
+							{
+								IsSuccess = true,
+								Payload = new
+								{
+									token = token,
+									email = customer.Email,
+									fullName = customer.FullName,
+									phoneNumber = customer.PhoneNumber,
+									username = customer.Username,
+									avatar = customer.Avatar,
+									shopName = customer.Shop.Name,
+									shopAvatar = customer.Shop.Avatar
+								},
+								Error = null
+							};
+						}
+					}
+					else
+					{
+						return new StandardResponse()
+						{
+							IsSuccess = false,
+							Payload = model,
+							Error = new StandardError()
+							{
+								ErrorCode = 1505,
+								ErrorMessage = Error.GetName(1505)
+							}
+						};
+					}
+					return null;
+				}
+				else
+				{
+					return new StandardResponse()
+					{
+						IsSuccess = false,
+						Error = new StandardError()
+						{
+							ErrorCode = 1404,
+							ErrorMessage = Error.GetName(1404)
+						},
+						Payload = null
+					};
+				}
+			}
+			else
+			{
+				return new StandardResponse()
+				{
+					IsSuccess = false,
+					Payload = null,
+					Error = new StandardError()
+					{
+						ErrorCode = 1287,
+						ErrorMessage = Error.GetName(1287)
+					}
+				};
+			}
+		}
 	}
 }

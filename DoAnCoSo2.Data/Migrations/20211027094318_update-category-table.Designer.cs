@@ -4,14 +4,16 @@ using DoAnCoSo2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DoAnCoSo2.Data.Migrations
 {
     [DbContext(typeof(DoAnCoSo2DbContext))]
-    partial class DoAnCoSo2DbContextModelSnapshot : ModelSnapshot
+    [Migration("20211027094318_update-category-table")]
+    partial class updatecategorytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,34 +176,7 @@ namespace DoAnCoSo2.Data.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category2", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeleteAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ParentCategoryId")
+                    b.Property<int?>("ParentCategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateAt")
@@ -211,39 +186,7 @@ namespace DoAnCoSo2.Data.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("CATEGORY2");
-                });
-
-            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category3", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeleteAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ParentCategory2Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentCategory2Id");
-
-                    b.ToTable("CATEGORY3");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Comment", b =>
@@ -1131,26 +1074,13 @@ namespace DoAnCoSo2.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category2", b =>
+            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category", b =>
                 {
-                    b.HasOne("DoAnCoSo2.DTOs.App.Category", "Category")
-                        .WithMany("Categories2")
-                        .HasForeignKey("ParentCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("DoAnCoSo2.DTOs.App.Category", "ParentCategory")
+                        .WithMany("Categories")
+                        .HasForeignKey("ParentCategoryId");
 
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category3", b =>
-                {
-                    b.HasOne("DoAnCoSo2.DTOs.App.Category2", "Category2")
-                        .WithMany("Categories3")
-                        .HasForeignKey("ParentCategory2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category2");
+                    b.Navigation("ParentCategory");
                 });
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Comment", b =>
@@ -1389,14 +1319,9 @@ namespace DoAnCoSo2.Data.Migrations
                 {
                     b.Navigation("Brands");
 
-                    b.Navigation("Categories2");
+                    b.Navigation("Categories");
 
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("DoAnCoSo2.DTOs.App.Category2", b =>
-                {
-                    b.Navigation("Categories3");
                 });
 
             modelBuilder.Entity("DoAnCoSo2.DTOs.App.Comment", b =>

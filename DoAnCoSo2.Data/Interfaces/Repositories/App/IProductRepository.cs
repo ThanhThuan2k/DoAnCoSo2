@@ -19,5 +19,6 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.App
 		Task<Category> GetCategory(int? categoryId);
 		Task<StandardResponse> Create(string shopUri, Product newProduct);
 		Task<StandardResponse> Update(Product update, string avatar, ICollection<Image> images);
+		Task<StandardResponse> GetAll();
 	}
 }

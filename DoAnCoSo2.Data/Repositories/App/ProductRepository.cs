@@ -279,5 +279,23 @@ namespace DoAnCoSo2.Data.Repositories.App
 				};
 			}
 		}
+		
+		public async Task<StandardResponse> GetAll()
+		{
+			return new StandardResponse()
+			{
+				IsSuccess = true,
+				Error = null,
+				Payload = await db.Products.AsNoTracking()
+					.Where(x => x.DeleteAt == null)
+					.Include(x => x.Shop)
+					.Include(x => x.Brand)
+					.Include(x => x.Category)
+					.Include(x => x.Images)
+					.Include(x => x.Evaluated)
+					.OrderByDescending(x => x.TotalSold)
+					.ToListAsync()
+			};
+		}
 	}
 }
