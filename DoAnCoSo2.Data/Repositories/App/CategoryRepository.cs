@@ -93,14 +93,8 @@ namespace DoAnCoSo2.Data.Repositories.App
 				IsSuccess = true,
 				Payload = await db.Categories
 				.Where(x => x.DeleteAt == null)
-				.Select(x => new
-				{
-					id = x.Id,
-					name = x.Name,
-					avatar = x.Avatar,
-					createAt = x.CreateAt,
-					tongSanPham = x.Products.Count
-				})
+				.Include(x => x.Categories2)
+				.ThenInclude(x => x.Categories3)
 				.ToListAsync(),
 				Error = null
 			};

@@ -85,7 +85,6 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 						string jwt = JwtService.General(admin);
 						Response.Cookies.Append("jwt", jwt);
 						await IAdminRepository.ResetAccessFailCount(admin.Email);
-						//var user = HttpContext.User.Claims.Where(x => )
 						return Ok(new StandardResponse()
 						{
 							IsSuccess = true,
@@ -94,6 +93,7 @@ namespace DoAnCoSo2.Web.Areas.Admin.Controllers
 							{
 								Fullname = admin.FullName,
 								Sex = admin.Sex,
+								Roles = admin.Role.Role,
 								Token = jwt
 							}
 						});

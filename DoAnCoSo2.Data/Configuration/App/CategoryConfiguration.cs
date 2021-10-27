@@ -21,7 +21,6 @@ namespace DoAnCoSo2.Data.Configuration.App
 			builder.Property(model => model.Avatar).HasMaxLength(DbConstant.CATEGORY_AVATAR_MAX_LENGTH)
 				.IsUnicode();
 			builder.Property(model => model.CreateAt).HasDefaultValueSql("GETDATE()");
-
 		}
 	}
 }

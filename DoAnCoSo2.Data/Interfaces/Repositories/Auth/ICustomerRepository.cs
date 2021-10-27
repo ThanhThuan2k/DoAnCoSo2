@@ -1,5 +1,6 @@
 ﻿using DoAnCoSo2.Data.Common;
 using DoAnCoSo2.Data.RequestModel.Customer;
+using DoAnCoSo2.Data.ViewModels.Auth;
 using DoAnCoSo2.DTOs.Auth;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,14 @@ namespace DoAnCoSo2.Data.Interfaces.Repositories.Auth
 		Task<StandardResponse> Delete(int id);
 		Customer GetDeleted(int id);
 		bool IsExistEmail(string email);
+		Task<bool> IsExistEmailAsync(string email);
 		bool IsExistPhoneNumber(string phone);
 		bool IsExistSalt(string salt);
 		Task<StandardResponse> Restore(int id);
 		Task<StandardResponse> Login(LoginRequestModel model);
 		Customer GetByPhoneNumber(string phone);
 		Task<StandardResponse> UploadAvatar(string salt, string path);
+		Task<StandardResponse> EmailAuthentication(string email);
+		Task<StandardResponse> Login(SellerLoginViewModel model);
 	}
 }
